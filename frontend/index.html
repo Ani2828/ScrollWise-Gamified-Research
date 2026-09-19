@@ -1,0 +1,684 @@
+python -m uvicorn main:app --reload<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScrollWise — Gamified Social Media Survey</title><script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f1f8;font-family:Inter,system-ui,sans-serif;color:#171326}button,textarea{font:inherit}
+#app{max-width:1080px;margin:auto;padding:18px}.shell{min-height:720px;border-radius:30px;overflow:hidden;position:relative;background:linear-gradient(135deg,#12082d,#30134d 54%,#54165f);color:#fff;padding:25px;box-shadow:0 24px 70px #1a082e55}
+.orb{position:absolute;border-radius:50%;filter:blur(5px);opacity:.34;animation:f 8s ease-in-out infinite;pointer-events:none}.a{width:230px;height:230px;background:#9b5cff;left:-90px;top:80px}.b{width:190px;height:190px;background:#ec4899;right:-70px;top:220px;animation-delay:-3s}.c{width:150px;height:150px;background:#38bdf8;left:44%;bottom:-70px;animation-delay:-5s}@keyframes f{50%{transform:translate(25px,-25px) scale(1.1)}}
+.stars{position:absolute;inset:0;opacity:.13;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:55px 55px;animation:s 20s linear infinite}@keyframes s{to{background-position:110px 110px}}
+.content{position:relative;z-index:2}.hidden{display:none!important}.welcome{text-align:center;padding:75px 12px}.logo{font-size:76px}.brand{font-size:50px;font-weight:950;letter-spacing:-2px}.sub{max-width:650px;margin:12px auto 25px;color:#eadff5;line-height:1.65}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}.chip{background:#ffffff10;border:1px solid #ffffff22;border-radius:999px;padding:8px 13px;font-size:13px}.btn{border:0;border-radius:15px;padding:13px 23px;min-height:46px;font-weight:850;cursor:pointer;transition:.18s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(90deg,#8b5cf6,#ec4899);color:#fff}.white{background:#fff;color:#5b21b6}.ghost{background:#ffffff10;color:#fff;border:1px solid #ffffff25}.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px}.level{font-weight:900}.count{font-size:13px;color:#ddd4eb}.bar{height:9px;background:#ffffff18;border-radius:20px;overflow:hidden;margin:13px 0 18px}.bar>div{height:100%;background:linear-gradient(90deg,#a78bfa,#f472b6,#67e8f9);transition:width .45s}.age{display:inline-block;background:#ffffff12;border:1px solid #ffffff20;border-radius:999px;padding:7px 12px;font-size:13px;margin-bottom:10px}
+.scene{position:relative;overflow:hidden;border-radius:24px;min-height:180px;padding:2px 0}.questionWindow{width:100%;will-change:transform,opacity}.questionWindow.slide-next{animation:slideNext .34s cubic-bezier(.2,.8,.2,1)}.questionWindow.slide-back{animation:slideBack .34s cubic-bezier(.2,.8,.2,1)}.questionWindow.no-slide{animation:none}@keyframes slideNext{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:translateX(0)}}@keyframes slideBack{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}.icon{text-align:center;font-size:54px}.q{text-align:center;font-size:29px;font-weight:900;line-height:1.25;max-width:850px;margin:4px auto 9px}.hint{text-align:center;color:#ded6e9;font-size:14px;margin-bottom:20px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:850px;margin:auto}.opt{background:#fffffff2;color:#171326;border:2px solid transparent;border-radius:18px;padding:15px;min-height:65px;text-align:left;font-weight:780;cursor:pointer;transition:.18s}.opt:hover{transform:translateY(-3px);border-color:#c4b5fd}.opt.sel{background:#ede9fe;border-color:#8b5cf6;box-shadow:0 8px 22px #8b5cf633}.num{display:inline-flex;width:29px;height:29px;align-items:center;justify-content:center;background:#f0ebf8;border-radius:9px;margin-right:8px;font-size:12px}.sel .num{background:#7c3aed;color:#fff}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;max-width:850px;margin:auto}.scale .opt{text-align:center;min-height:132px}.scale .num{margin:0 auto 7px}.scale strong{display:block;font-size:20px}.scale small{display:block;color:#665d70;margin-top:6px;line-height:1.35}
+.reaction{max-width:850px;margin:18px auto 0;border:1px solid #ffffff24;background:linear-gradient(135deg,#ffffff12,#ffffff08);border-radius:22px;padding:16px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 14px 35px #0002;}@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.reactionEmoji{font-size:43px;min-width:58px;text-align:center}.reactionText{flex:1}.reactionTag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#d8b4fe;font-weight:900}.reactionCaption{font-size:16px;font-weight:850;line-height:1.35;margin-top:3px}.reactionSub{font-size:12px;color:#d7cee3;margin-top:5px}.meter{height:7px;background:#ffffff12;border-radius:20px;margin-top:10px;overflow:hidden}.meter div{height:100%;border-radius:20px;background:linear-gradient(90deg,#67e8f9,#a78bfa,#f472b6);transition:.4s}
+.nav{display:flex;justify-content:space-between;max-width:850px;margin:22px auto 0;gap:10px;position:relative;z-index:10;padding:10px;border-radius:18px;background:#16092ee8;backdrop-filter:blur(12px);box-shadow:0 12px 32px #0006}.nav .btn{position:relative;z-index:101;pointer-events:auto}.nav .white{opacity:1;cursor:pointer}.nav .white.ready{box-shadow:0 0 0 2px #a78bfa88,0 8px 24px #0004}.nav .white{background:linear-gradient(90deg,#fff,#f3e8ff);color:#5b21b6;box-shadow:0 0 0 2px #a78bfa55,0 8px 22px #0003}textarea{display:block;width:100%;max-width:850px;min-height:155px;border:0;border-radius:18px;padding:16px;resize:vertical;outline:none}.toast{text-align:center;color:#f5d0fe;min-height:21px;margin-top:10px;font-size:13px}.finish{text-align:center;padding:85px 10px}.big{font-size:82px;animation:fp .7s ease}@keyframes fp{0%{transform:scale(.5) rotate(-10deg);opacity:0}70%{transform:scale(1.1) rotate(4deg)}100%{transform:scale(1);opacity:1}}
+@media(max-width:700px){#app{padding:0}.shell{border-radius:0;min-height:100vh;padding:18px}.brand{font-size:39px}.welcome{padding:65px 5px}.q{font-size:23px}.opts,.scale{grid-template-columns:1fr}.scale .opt{text-align:left;min-height:65px}.scale .num{margin:0 8px 0 0}.scale small{display:inline;margin-left:5px}.reaction{align-items:flex-start}.reactionEmoji{font-size:35px;min-width:42px}}
+
+/* ================= MEME GAME V2 ================= */
+/* RESPONSE MEME LIBRARY */
+.responseMemeStage{max-width:850px;margin:16px auto 0;position:relative}.memeFrame.responseMeme{overflow:visible;background:#fff}.responseMeme .memeImage{position:relative;background:#fff;min-height:0}.responseMeme .memeImage img.mainMeme{aspect-ratio:720/820;object-fit:cover;background:#fff}.memeGifSticker{position:absolute;right:-8px;top:-10px;width:84px;height:84px;z-index:7;filter:drop-shadow(3px 4px 0 rgba(23,19,38,.18));pointer-events:none}.memeStaticSticker{position:absolute;left:-9px;bottom:78px;z-index:7;padding:6px 9px;border:2px solid #171326;border-radius:999px;background:#fef08a;font-size:10px;font-weight:1000;transform:rotate(-6deg)}.memeResponseLabel{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;border:2px solid #171326;background:#fff;font-size:9px;font-weight:1000}.memeFrame.responseMeme .memeCaptionBand{font-size:14px}.memeChoiceRow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.memeChoiceRow span{padding:6px 9px;border-radius:999px;border:2px solid #171326;background:#fff7ed;font-size:9px;font-weight:1000}.memeFrame.responseMeme .memeActions .memeAction{transition:transform .12s ease}.memeFrame.responseMeme .memeActions .memeAction:active{transform:scale(.9)}
+
+.memeCard{max-width:850px;margin:14px auto 0;border:1px solid #ffffff2b;background:linear-gradient(135deg,#ff4ecd18,#7c3aed20 55%,#22d3ee12);border-radius:24px;padding:18px;box-shadow:0 18px 45px #0003;position:relative;overflow:hidden;}
+.memeCard:before{content:"MEME DROP";position:absolute;right:14px;top:12px;font-size:9px;font-weight:1000;letter-spacing:1.5px;color:#f0abfc;background:#ffffff10;border:1px solid #ffffff1c;border-radius:999px;padding:5px 8px}
+.memeTop{display:flex;align-items:center;gap:12px}.memeEmoji{font-size:48px;filter:drop-shadow(0 8px 12px #0003)}.memeEyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.4px;color:#67e8f9;font-weight:950}.memeTitle{font-size:18px;font-weight:950;line-height:1.2;margin-top:3px;max-width:680px}.memeBody{margin:12px 0 0;padding:12px 14px;border-radius:16px;background:#09051a55;border:1px solid #ffffff12;font-size:14px;line-height:1.5;font-weight:750}.memeQuote{color:#fce7f3;font-style:italic}.memeMeter{display:flex;align-items:center;gap:10px;margin-top:12px}.memeMeterTrack{height:8px;flex:1;background:#ffffff12;border-radius:99px;overflow:hidden}.memeMeterTrack span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#67e8f9,#a78bfa,#fb7185);transition:width .5s}.memeMeterLabel{font-size:10px;color:#ddd6fe;font-weight:900;min-width:78px;text-align:right}.sectionIntro{max-width:850px;margin:0 auto 16px;padding:17px 18px;border-radius:20px;background:linear-gradient(135deg,#8b5cf622,#ec489922);border:1px solid #ffffff25;box-shadow:0 12px 30px #0002;}.sectionIntroBadge{display:inline-block;font-size:10px;font-weight:1000;letter-spacing:1.4px;color:#67e8f9;background:#ffffff0c;border:1px solid #ffffff20;border-radius:999px;padding:5px 9px}.sectionIntroTitle{font-size:19px;font-weight:950;margin-top:8px}.sectionIntroText{font-size:13px;line-height:1.5;color:#ded6e9;margin-top:5px}.sectionIntroSteps{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.sectionIntroSteps span{font-size:10px;font-weight:850;background:#ffffff0b;border:1px solid #ffffff17;border-radius:999px;padding:6px 8px;color:#f5eaff}.levelDrop{max-width:850px;margin:0 auto 14px;padding:13px 16px;border-radius:18px;background:#ffffff0d;border:1px solid #ffffff1c;display:flex;align-items:center;gap:12px;}.levelDropIcon{font-size:28px}.levelDrop small{display:block;color:#c4b5fd;font-weight:800;text-transform:uppercase;letter-spacing:1px}.levelDrop strong{font-size:15px}.levelDrop span{margin-left:auto;color:#e9d5ff;font-size:12px}.burst{position:fixed;z-index:50;pointer-events:none;font-size:28px;}
+.memeVisual{margin-top:14px;position:relative;border-radius:18px;overflow:hidden;border:1px solid #ffffff1c;background:#070411;box-shadow:0 14px 35px #0004}.memeVisual img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:saturate(1.08);}.gifBadge{position:absolute;left:12px;bottom:10px;padding:6px 9px;border-radius:999px;background:#09051acc;border:1px solid #ffffff24;color:#fff;font-size:9px;font-weight:1000;letter-spacing:1.2px}.memeVisual:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 35%,#fff2 48%,transparent 60%);transform:translateX(-100%);}@keyframes gifPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}@keyframes shine{0%,55%{transform:translateX(-100%)}75%,100%{transform:translateX(100%)}}
+
+/* SOCIAL / INSTAGRAM-STYLE MEME UI */
+.igPost{max-width:850px;margin:16px auto 0;border:1px solid #ffffff2b;background:#0b0714;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px #0005;}
+.igHead{display:flex;align-items:center;gap:11px;padding:13px 15px;background:linear-gradient(90deg,#15101f,#0d0916)}
+.igAvatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,#f9ce34,#ee2a7b 48%,#6228d7);border:2px solid #fff8}
+.igUser{flex:1;min-width:0}.igUser strong{font-size:13px}.igUser small{display:block;color:#b9afc8;font-size:10px;margin-top:2px}.igMore{font-size:20px;color:#cfc5dc}
+.igImage{position:relative;background:#090612;min-height:230px;display:grid;place-items:center}.igImage img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:saturate(1.12) contrast(1.03)}
+.igOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}.igOverlay span{opacity:0;font-size:76px;filter:drop-shadow(0 10px 18px #0008)}.igImage.doubleTap .igOverlay span{opacity:1}.igBadge{position:absolute;left:12px;bottom:12px;background:#080511d9;border:1px solid #fff3;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:1000;letter-spacing:1px}
+.igActions{display:flex;align-items:center;gap:15px;padding:12px 14px 4px}.igAction{border:0;background:none;color:#fff;font-size:24px;padding:4px;min-width:38px;min-height:38px;cursor:pointer}.igAction.liked{color:#ff4d8d}.igSave{margin-left:auto}.igStats{padding:2px 15px 0;font-size:12px;font-weight:900}.igCaption{padding:7px 15px 2px;font-size:13px;line-height:1.45}.igCaption b{margin-right:5px}.igComment{padding:5px 15px 14px;color:#a99fb5;font-size:11px}.igReactionBar{display:flex;gap:7px;flex-wrap:wrap;padding:0 15px 14px}.igReaction{border:1px solid #ffffff18;background:#ffffff08;border-radius:999px;color:#e9dff0;padding:6px 9px;font-size:10px;font-weight:900;cursor:pointer}.igReaction.active{border-color:#a78bfa;background:#7c3aed25;color:#fff}.igToast{font-size:10px;color:#c4b5fd;padding:0 15px 14px;min-height:15px}
+@keyframes igHeart{0%{opacity:0;transform:scale(.5)}25%{opacity:1;transform:scale(1.15)}65%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+@media(max-width:700px){.igImage{min-height:190px}.igActions{gap:7px}.igAction{font-size:21px}}
+
+.memeHint{max-width:850px;margin:10px auto 0;text-align:center;color:#c4b5fd;font-size:11px;font-weight:800;letter-spacing:.6px}.reaction{position:relative}.reaction:after{content:"😂";position:absolute;right:12px;bottom:9px;opacity:.25;font-size:15px}@keyframes memeIn{from{opacity:0;transform:translateY(14px) rotate(-1deg) scale(.97)}to{opacity:1;transform:none}}@keyframes dropIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:none}}@keyframes burst{0%{opacity:1;transform:translate(0,0) scale(.8) rotate(0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.5) rotate(var(--rot))}}
+.soundToggle{margin-left:auto;min-height:38px;padding:8px 11px;border-radius:999px;border:2px solid rgba(25,21,37,.55);background:rgba(255,255,255,.88);color:#171326;font-size:10px;font-weight:950;cursor:pointer;box-shadow:3px 3px 0 rgba(25,21,37,.12)}.soundToggle.off{background:rgba(25,21,37,.10);color:inherit}.cuteSoundBadge{display:inline-flex;align-items:center;gap:6px;margin-top:11px;padding:7px 10px;border-radius:999px;background:#fff7ed;border:2px solid #171326;color:#171326;font-size:10px;font-weight:950}.cuteSoundBadge button{border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;padding:0}.memeHint{max-width:850px;margin:10px auto 0;text-align:center;color:#6b5d76;font-size:11px;font-weight:800;letter-spacing:.4px}@media(max-width:700px){.soundToggle{font-size:9px;padding:7px 9px}}
+@media(max-width:700px){.memeCard{padding:15px}.memeTitle{font-size:16px}.memeEmoji{font-size:40px}.levelDrop span{display:none}}
+.soundBadge{display:inline-flex;align-items:center;gap:6px;margin-top:11px;padding:7px 10px;border-radius:999px;background:#ffffff0b;border:1px solid #ffffff18;color:#f5d0fe;font-size:10px;font-weight:950;letter-spacing:.6px}.reaction,.memeCard,.igPost,.sectionIntro,.levelDrop,.burst,.memeVisual img{animation:none!important}.memeVisual:after{display:none!important}
+/* ================= DOODLY / PINTEREST-INSPIRED MEME UPGRADE ================= */
+.scene{perspective:1100px}
+.questionWindow{border-radius:28px;padding:4px 6px 8px;position:relative}
+.questionWindow:before{content:"";position:absolute;inset:2px 0 0;border-radius:28px;pointer-events:none;background-image:radial-gradient(circle at 15% 18%,rgba(255,255,255,.32) 1.5px,transparent 2px),radial-gradient(circle at 83% 76%,rgba(0,0,0,.10) 1.5px,transparent 2px);background-size:46px 46px,61px 61px;mix-blend-mode:soft-light;opacity:.55}
+.doodleHeader{display:flex;align-items:center;gap:10px;margin:0 auto 13px;max-width:850px;position:relative;z-index:2}
+.doodleSticker{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;border:3px solid #191525;box-shadow:4px 5px 0 rgba(25,21,37,.18);font-size:25px;transform:rotate(-5deg);flex:0 0 auto}
+.doodleHeaderText{flex:1;min-width:0}.doodleKicker{font-size:10px;font-weight:1000;letter-spacing:1.6px;text-transform:uppercase}.doodleHeaderTitle{font-size:17px;font-weight:950;margin-top:2px}.doodleTape{width:80px;height:22px;background:rgba(255,247,195,.85);transform:rotate(5deg);border:1px solid rgba(35,30,20,.18);box-shadow:0 3px 7px rgba(0,0,0,.08)}
+/* ten distinct notebook / feed skins — each question group feels different */
+.theme-sky{background:linear-gradient(140deg,#e0f2fe 0%,#fef9c3 55%,#ffffff 100%);color:#172033;box-shadow:0 16px 38px rgba(30,64,175,.18)}
+.theme-sun{background:linear-gradient(140deg,#fff7ad 0%,#fed7aa 48%,#fbcfe8 100%);color:#29180e;box-shadow:0 16px 38px rgba(234,88,12,.17)}
+.theme-mint{background:linear-gradient(140deg,#dcfce7 0%,#cffafe 52%,#f0fdf4 100%);color:#12211a;box-shadow:0 16px 38px rgba(5,150,105,.15)}
+.theme-night{background:linear-gradient(140deg,#0f172a 0%,#312e81 48%,#111827 100%);color:#fff;box-shadow:0 18px 42px rgba(15,23,42,.38)}
+.theme-lavender{background:linear-gradient(140deg,#ede9fe 0%,#fce7f3 55%,#fae8ff 100%);color:#261a38;box-shadow:0 16px 38px rgba(126,34,206,.17)}
+.theme-blueprint{background:linear-gradient(140deg,#dbeafe 0%,#bfdbfe 52%,#e0e7ff 100%);color:#12233f;box-shadow:0 16px 38px rgba(37,99,235,.17)}
+.theme-warning{background:linear-gradient(140deg,#fee2e2 0%,#fed7aa 50%,#fef3c7 100%);color:#30130f;box-shadow:0 16px 38px rgba(220,38,38,.18)}
+.theme-social{background:linear-gradient(140deg,#fce7f3 0%,#f3e8ff 44%,#dbeafe 100%);color:#24162b;box-shadow:0 16px 38px rgba(236,72,153,.18)}
+.theme-brain{background:linear-gradient(140deg,#cffafe 0%,#e0f2fe 50%,#ede9fe 100%);color:#132433;box-shadow:0 16px 38px rgba(8,145,178,.16)}
+.theme-scrap{background:linear-gradient(135deg,#fef3c7 0%,#fef9c3 35%,#dcfce7 36%,#dcfce7 68%,#fce7f3 69%,#fce7f3 100%);color:#241c14;box-shadow:0 16px 38px rgba(180,83,9,.17)}
+.theme-final{background:linear-gradient(140deg,#111827 0%,#3f0d27 52%,#1e1b4b 100%);color:#fff;box-shadow:0 20px 48px rgba(31,11,40,.4)}
+.theme-night .opt,.theme-final .opt{background:rgba(255,255,255,.94)}
+.questionWindow .q,.questionWindow .hint,.questionWindow .doodleHeader{position:relative;z-index:2}
+.questionWindow .q{text-shadow:none}
+.questionWindow .hint{color:inherit;opacity:.72}
+.questionWindow .reaction{position:relative;z-index:3;border:2px dashed rgba(25,21,37,.38);background:rgba(255,255,255,.72);color:#171326;box-shadow:7px 8px 0 rgba(25,21,37,.10);backdrop-filter:blur(2px);transform:rotate(.35deg)}
+.theme-night .reaction,.theme-final .reaction{background:rgba(17,24,39,.78);color:#fff;border-color:rgba(255,255,255,.36)}
+.theme-night .reactionSub,.theme-final .reactionSub{color:#e5e7eb}
+.theme-night .reactionTag,.theme-final .reactionTag{color:#93c5fd}
+.memeDropWrap{max-width:850px;margin:16px auto 0;position:relative;z-index:4}
+.memeFrame{border:3px solid #161421;border-radius:22px;overflow:hidden;box-shadow:10px 12px 0 rgba(22,20,33,.16);background:#fff;color:#171326;position:relative}
+.memeFrame.pinterest{transform:rotate(-.7deg)}
+.memeFrame.scrapbook{transform:rotate(.7deg)}
+.memeFrame.chat{transform:rotate(-.35deg)}
+.memeFrame.warning{transform:rotate(.5deg)}
+.memeFrame.ig{transform:rotate(-.4deg)}
+.memeFrameTop{display:flex;align-items:center;gap:8px;padding:11px 13px;background:#fff;border-bottom:2px solid #171326}
+.memeAvatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px solid #171326;font-size:17px;background:#fef08a}.memeAccount{flex:1;font-size:11px;font-weight:950}.memeAccount small{display:block;font-weight:700;opacity:.55;font-size:9px;margin-top:2px}.memeDots{font-size:18px}
+.memeImage{background:#f8fafc}.memeImage img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}.memeCaptionBand{padding:11px 13px;background:#fff;font-size:13px;line-height:1.45;font-weight:800;border-top:2px solid #171326}.memeCaptionBand em{font-weight:600}.memeActions{display:flex;align-items:center;gap:11px;padding:9px 13px 5px;background:#fff}.memeAction{border:0;background:transparent;font-size:21px;padding:2px;min-height:38px;cursor:pointer}.memeAction.save{margin-left:auto}.memeMeta{display:flex;gap:6px;flex-wrap:wrap;padding:0 13px 10px;background:#fff}.memePill{border:2px solid #171326;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:1000;background:#fef08a}.memePill:nth-child(2){background:#bae6fd}.memePill:nth-child(3){background:#fecdd3}.memeFooter{padding:0 13px 12px;background:#fff;font-size:9px;font-weight:800;opacity:.72}.memeFrame.chat .memeCaptionBand{background:#ecfdf5}.memeFrame.warning .memeCaptionBand{background:#fff1f2}.memeFrame.scrapbook .memeCaptionBand{background:#fff7ed}.memeFrame.pinterest .memeCaptionBand{background:#fef2f2}.memeFrame.ig .memeCaptionBand{background:#faf5ff}.memeFrame.ig .memeAvatar{background:linear-gradient(135deg,#fde047,#f472b6 55%,#8b5cf6);color:#111}.memeStamp{position:absolute;right:12px;top:12px;padding:5px 8px;border:2px solid #171326;border-radius:999px;background:#fff;font-size:9px;font-weight:1000;transform:rotate(6deg);z-index:2}
+.doodleTags{max-width:850px;margin:12px auto 0;display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:4}.doodleTag{border:2px solid #171326;border-radius:999px;padding:6px 9px;background:#fff;font-size:9px;font-weight:1000;box-shadow:3px 3px 0 rgba(23,19,38,.12);transform:rotate(-1deg)}.doodleTag:nth-child(2){transform:rotate(1.4deg);background:#dbeafe}.doodleTag:nth-child(3){transform:rotate(-.7deg);background:#fce7f3}
+.soundBadge{background:#111827;color:#fff;border:2px solid #111827}
+.memeHint{color:inherit;opacity:.72}
+@media(max-width:700px){.doodleTape{display:none}.doodleHeaderTitle{font-size:15px}.doodleSticker{width:42px;height:42px}.memeCaptionBand{font-size:12px}.memeImage img{aspect-ratio:4/5}}
+
+/* playful option skins */
+.theme-sky .opt{background:#ffffff;color:#172033;border:3px solid #172033;box-shadow:5px 5px 0 #7dd3fc}
+.theme-sun .opt{background:#fffdf2;color:#29180e;border:3px solid #7c2d12;box-shadow:5px 5px 0 #fdba74}
+.theme-mint .opt{background:#f7fffb;color:#12211a;border:3px solid #14532d;box-shadow:5px 5px 0 #86efac}
+.theme-night .opt{background:#f8fafc;color:#111827;border:3px solid #020617;box-shadow:5px 5px 0 #818cf8}
+.theme-lavender .opt{background:#fffaff;color:#261a38;border:3px solid #4c1d95;box-shadow:5px 5px 0 #f9a8d4}
+.theme-blueprint .opt{background:#eff6ff;color:#12233f;border:3px solid #1d4ed8;box-shadow:5px 5px 0 #60a5fa}
+.theme-warning .opt{background:#fffafa;color:#30130f;border:3px solid #991b1b;box-shadow:5px 5px 0 #fb7185}
+.theme-social .opt{background:#fff7fb;color:#24162b;border:3px solid #86198f;box-shadow:5px 5px 0 #f9a8d4}
+.theme-brain .opt{background:#f8ffff;color:#132433;border:3px solid #155e75;box-shadow:5px 5px 0 #67e8f9}
+.theme-scrap .opt{background:#fffdf5;color:#241c14;border:3px solid #57534e;box-shadow:5px 5px 0 #fbbf24}
+.theme-final .opt{background:#fff;color:#111827;border:3px solid #111827;box-shadow:5px 5px 0 #fb7185}
+.theme-scrap .opt:nth-child(odd){transform:rotate(-1deg)}.theme-scrap .opt:nth-child(even){transform:rotate(1deg)}
+.theme-sun .opt:nth-child(3n){transform:rotate(-.7deg)}.theme-sun .opt:nth-child(3n+1){transform:rotate(.7deg)}
+.theme-social .opt:nth-child(2n){transform:rotate(.6deg)}
+.theme-warning .opt:nth-child(2n){transform:translateX(3px)}
+.theme-final .doodleHeader{color:#fff}.theme-final .doodleSticker{background:#fda4af}.theme-night .doodleSticker{background:#a5b4fc}.theme-social .doodleSticker{background:#f9a8d4}.theme-brain .doodleSticker{background:#67e8f9}.theme-mint .doodleSticker{background:#86efac}.theme-sky .doodleSticker{background:#7dd3fc}.theme-sun .doodleSticker{background:#fde68a}.theme-lavender .doodleSticker{background:#e9d5ff}.theme-blueprint .doodleSticker{background:#93c5fd}.theme-warning .doodleSticker{background:#fca5a5}.theme-scrap .doodleSticker{background:#fcd34d}
+
+.memeFrame.blueprint{background:#eff6ff;border-color:#1d4ed8;box-shadow:10px 12px 0 #60a5fa}
+.memeFrame.blueprint .memeFrameTop{background:#dbeafe;border-color:#1d4ed8}.memeFrame.blueprint .memeCaptionBand{background:#eff6ff}.memeFrame.blueprint .memeAvatar{background:#bfdbfe}
+.memeFrame.warning .memeFrameTop{background:#fff1f2}.memeFrame.warning .memeAvatar{background:#fecaca}.memeFrame.chat .memeFrameTop{background:#ecfdf5}.memeFrame.chat .memeAvatar{background:#bbf7d0}.memeFrame.scrapbook .memeFrameTop{background:#fff7ed}.memeFrame.scrapbook .memeAvatar{background:#fed7aa}.memeFrame.pinterest .memeFrameTop{background:#fef2f2}.memeFrame.pinterest .memeAvatar{background:#fecdd3}
+.theme-final .doodleKicker{color:#67e8f9}.theme-final .doodleHeaderTitle{color:#fff}.theme-final .doodleTape{background:#fda4af}
+.theme-night .doodleKicker{color:#a5b4fc}.theme-night .doodleTape{background:#c7d2fe}.theme-warning .doodleKicker{color:#991b1b}.theme-social .doodleKicker{color:#86198f}.theme-sun .doodleKicker{color:#9a3412}.theme-mint .doodleKicker{color:#166534}.theme-sky .doodleKicker{color:#075985}.theme-blueprint .doodleKicker{color:#1d4ed8}.theme-brain .doodleKicker{color:#155e75}.theme-lavender .doodleKicker{color:#6b21a8}.theme-scrap .doodleKicker{color:#92400e}
+
+/* ================= SCROLLWISE V3 GAME HUD ================= */
+.gameHud{display:flex;gap:9px;max-width:850px;margin:0 auto 12px;justify-content:flex-end;flex-wrap:wrap}
+.hudItem{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff22;backdrop-filter:blur(8px);font-size:11px;color:#eee5f7}
+.hudItem strong{font-size:14px;color:#fff}
+.xpFloat{position:fixed;z-index:9999;pointer-events:none;font-weight:1000;font-size:22px;color:#fef08a;text-shadow:0 3px 12px #0008;animation:xpFloat .9s ease-out forwards}
+@keyframes xpFloat{0%{opacity:0;transform:translateY(10px) scale(.7)}20%{opacity:1;transform:translateY(0) scale(1.1)}100%{opacity:0;transform:translateY(-85px) scale(1)}}
+.bonusOverlay{position:fixed;inset:0;z-index:9998;background:#10051dcc;backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px}
+.bonusCard{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f5ecff);color:#171326;border:4px solid #171326;border-radius:30px;padding:28px;text-align:center;box-shadow:0 25px 80px #0008;animation:bonusIn .28s ease-out}
+.bonusCard h2{margin:4px 0;font-size:30px}.bonusCard p{color:#62576e}.bonusTarget{font-size:88px;line-height:1;margin:18px 0;cursor:pointer;user-select:none;transition:transform .12s}
+.bonusTarget:active{transform:scale(.82) rotate(10deg)}
+.bonusTimer{height:9px;background:#e9ddf5;border-radius:20px;overflow:hidden}.bonusTimer div{height:100%;width:100%;background:linear-gradient(90deg,#8b5cf6,#ec4899);transform-origin:left}
+.bonusResult{min-height:26px;font-weight:900;margin:10px 0}
+@keyframes bonusIn{from{opacity:0;transform:scale(.92) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@media(max-width:700px){.gameHud{justify-content:center}.hudItem{flex:1;justify-content:center}.bonusCard{padding:22px}.bonusTarget{font-size:72px}}
+</style></head><body><div id="app"><div class="shell"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="stars"></div><div class="content"><section id="welcome" class="welcome"><div class="logo">📱✨</div><div class="brand">SCROLLWISE</div><p class="sub">Your everyday scrolling habits — turned into a tiny interactive adventure. Pick an answer, trigger a meme, survive the levels, and help build the research dataset.</p><div class="chips"><span class="chip">🎮 36 questions</span><span class="chip">😂 100+ meme drops</span><span class="chip">🧑 age-aware reactions</span><span class="chip">⭐ descriptive 1–5 scales</span><span class="chip">🔬 research survey</span></div><button id="start" class="btn primary">Start the journey →</button></section>
+<section id="survey" class="hidden"><div class="head"><div id="level" class="level"></div><span id="count" class="count"></span><button id="soundToggle" type="button" class="soundToggle" aria-pressed="true">🔊 Cute sounds: ON</button></div><div class="bar"><div id="progress" style="width:0%"></div></div><div id="age" class="age hidden"></div>
+<div class="gameHud" aria-label="Game progress">
+  <div class="hudItem"><span>⭐ XP</span><strong id="xp">0</strong></div>
+  <div class="hudItem"><span>🔥 STREAK</span><strong id="streak">0</strong></div>
+  <div class="hudItem"><span>🏆 BADGES</span><strong id="badges">0</strong></div>
+</div>
+<div id="scene" class="scene"></div><div id="toast" class="toast"></div><div class="nav"><button id="back" type="button" class="btn ghost">← Back</button><button id="next" type="button" class="btn white">Continue →</button></div></section>
+<section id="finish" class="finish hidden"><div class="big">🎉</div><h1>Journey complete!</h1><p class="sub" id="finishText">Thank you for contributing to the research.</p><button id="again" class="btn primary">Play again</button></section>
+</div></div></div>
+<script>
+const Q=[{"id": "Q01", "section": "Consent", "question": "Do you voluntarily agree to participate in this academic research survey?", "options": ["Yes", "No"], "type": "single"}, {"id": "Q02", "section": "Demographic Information", "question": "What is your age?", "options": ["13-17", "18-24", "25-34", "35-44", "45-59", "60+"], "type": "single"}, {"id": "Q03", "section": "Demographic Information", "question": "What is your gender?", "options": ["Male", "Female", "Non-binary / Other", "Prefer not to say"], "type": "single"}, {"id": "Q04", "section": "Demographic Information", "question": "What is your current occupation/status?", "options": ["School student", "College/university student", "Working professional", "Self-employed", "Homemaker", "Retired", "Currently not working", "Other"], "type": "single"}, {"id": "Q05", "section": "Demographic Information", "question": "What is your highest/current level of education?", "options": ["School", "Diploma", "Undergraduate", "Postgraduate", "Doctoral", "Other"], "type": "single"}, {"id": "Q06", "section": "Social Media Usage", "question": "Which social media platforms do you regularly use?", "options": ["Instagram", "YouTube", "Facebook", "WhatsApp", "Snapchat", "X", "Reddit", "LinkedIn", "Telegram", "Other", "None"], "type": "multi"}, {"id": "Q07", "section": "Social Media Usage", "question": "Approximately how much time do you spend on social media each day?", "options": ["Less than 1 hour", "1–2 hours", "2–3 hours", "3–4 hours", "4–5 hours", "5–6 hours", "More than 6 hours"], "type": "single"}, {"id": "Q08", "section": "Social Media Usage", "question": "How frequently do you check social media throughout the day?", "options": ["1–2 times", "3–5 times", "6–10 times", "11–20 times", "More than 20 times"], "type": "single"}, {"id": "Q09", "section": "Social Media Usage", "question": "How often do you use social media within one hour before going to sleep?", "options": ["1 — Never", "2", "3", "4", "5 — Always"], "type": "scale"}, {"id": "Q10", "section": "Social Media Usage", "question": "How often do you check social media immediately after waking up?", "options": ["1 — Never", "2", "3", "4", "5 — Always"], "type": "scale"}, {"id": "Q11", "section": "Social Media Usage", "question": "What is your primary reason for using social media?", "options": ["Entertainment", "Communication", "Education/learning", "News/information", "Professional networking", "Business/work", "Content creation", "Following hobbies/interests", "Other"], "type": "single"}, {"id": "Q12", "section": "Sleep & Lifestyle", "question": "On average, how many hours do you sleep per night?", "options": ["Less than 4 hours", "4–5 hours", "5–6 hours", "6–7 hours", "7–8 hours", "More than 8 hours"], "type": "single"}, {"id": "Q13", "section": "Sleep & Lifestyle", "question": "How often does social media usage cause you to sleep later than planned?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q14", "section": "Sleep & Lifestyle", "question": "How would you describe your sleep quality?", "options": ["Very poor", "Poor", "Average", "Good", "Very good"], "type": "single"}, {"id": "Q15", "section": "Sleep & Lifestyle", "question": "How many days per week do you engage in physical activity/exercise for at least 30 minutes?", "options": ["0 days", "1–2 days", "3–4 days", "5–6 days", "7 days"], "type": "single"}, {"id": "Q16", "section": "Productivity & Daily Life", "question": "How often does social media distract you while studying or working?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q17", "section": "Productivity & Daily Life", "question": "How often do you postpone important tasks because of social media?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q18", "section": "Productivity & Daily Life", "question": "How often do you use social media while studying or working?", "options": ["Always", "Often", "Sometimes", "Rarely", "Never"], "type": "single"}, {"id": "Q19", "section": "Productivity & Daily Life", "question": "How difficult is it for you to stop using social media when you intend to?", "options": ["1 — Very Easy", "2", "3", "4", "5 — Very Difficult"], "type": "scale"}, {"id": "Q20", "section": "Productivity & Daily Life", "question": "Have you ever spent more time on social media than you originally intended?", "options": ["Never", "Rarely", "Sometimes", "Often", "Very often"], "type": "single"}, {"id": "Q21", "section": "Offline Social Interaction", "question": "How frequently do you interact face-to-face with friends, family, colleagues, or other people?", "options": ["Less than once a week", "1–2 times per week", "3–4 times per week", "5–6 times per week", "Daily"], "type": "single"}, {"id": "Q22", "section": "Offline Social Interaction", "question": "How often do you prefer communicating through social media instead of face-to-face interaction?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q23", "section": "Offline Social Interaction", "question": "Do you feel that your social-media usage has reduced the amount of time you spend interacting with people offline?", "options": ["Not at all", "Slightly", "Moderately", "Significantly", "Very significantly"], "type": "single"}, {"id": "Q24", "section": "Self-Reported Impact", "question": "How often do you feel mentally tired after prolonged social media use?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q25", "section": "Self-Reported Impact", "question": "How often do you compare your life, appearance, achievements, or lifestyle with people you see on social media?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q26", "section": "Self-Reported Impact", "question": "How often does social media negatively affect your mood?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q27", "section": "Self-Reported Impact", "question": "How often do you feel the need to check social media even when there is no important notification?", "options": ["1 — Never", "2", "3", "4", "5 — Very Often"], "type": "scale"}, {"id": "Q28", "section": "Overall Self-Assessment", "question": "Overall, how would you describe the impact of social media on your daily life?", "options": ["Very positive", "Somewhat positive", "Neutral", "Somewhat negative", "Very negative"], "type": "single"}, {"id": "Q29", "section": "Overall Self-Assessment", "question": "How would you rate your overall social media usage?", "options": ["1 — Very low", "2", "3", "4", "5 — Very High"], "type": "scale"}, {"id": "Q30", "section": "Overall Self-Assessment", "question": "Do you think you spend more time on social media than you should?", "options": ["Definitely no", "Probably no", "Not sure", "Probably yes", "Definitely yes"], "type": "single"}, {"id": "Q31", "section": "Overall Social Media Impact", "question": "Overall, how much does social media affect your daily life?", "options": ["1 — No impact", "2", "3", "4", "5 — Very High impact"], "type": "scale"}, {"id": "Q32", "section": "Overall Social Media Impact", "question": "How satisfied are you with your current level of social media usage?", "options": ["1 — Very dissatisfied", "2", "3", "4", "5 — Very satisfied"], "type": "scale"}, {"id": "Q33", "section": "Overall Social Media Impact", "question": "Have you ever tried to reduce your social media usage?", "options": ["Never", "Once", "A few times", "Many times", "Currently trying to reduce it"], "type": "single"}, {"id": "Q34", "section": "Overall Social Media Impact", "question": "If you have tried to reduce your usage, how difficult was it?", "options": ["1 — Very easy", "2", "3", "4", "5 — Very Difficult"], "type": "scale"}, {"id": "Q35", "section": "Overall Social Media Impact", "question": "In your opinion, what is the biggest effect social media has on your daily life?", "options": ["Improves communication", "Helps me learn/increase knowledge", "Provides entertainment", "Helps with professional opportunities", "Reduces productivity", "Affects my sleep", "Causes distraction", "Affects my mood", "Reduces offline interaction", "No significant effect", "Other"], "type": "single"}, {"id": "Q36", "section": "Overall Social Media Impact", "question": "Is there anything else you would like to share about your social media usage?", "options": [], "type": "text"}];let i=0,A={},AGE="";
+const icons={"Consent":"👋","Demographic Information":"🌎","Social Media Usage":"📱","Sleep & Lifestyle":"🌙","Productivity & Daily Life":"🎯","Offline Social Interaction":"🧑‍🤝‍🧑","Self-Reported Impact":"🧠","Overall Self-Assessment":"⚖️","Overall Social Media Impact":"🏆"};
+const scaleText={Q09:["Never","Rarely","Sometimes","Often","Always"],Q10:["Never","Rarely","Sometimes","Often","Always"],Q13:["Never","Rarely","Sometimes","Often","Very often"],Q16:["Never","Rarely","Sometimes","Often","Very often"],Q17:["Never","Rarely","Sometimes","Often","Very often"],Q19:["Very easy","Easy","Moderately difficult","Difficult","Very difficult"],Q22:["Never","Rarely","Sometimes","Often","Very often"],Q24:["Never","Rarely","Sometimes","Often","Very often"],Q25:["Never","Rarely","Sometimes","Often","Very often"],Q26:["Never","Rarely","Sometimes","Often","Very often"],Q27:["Never","Rarely","Sometimes","Often","Very often"],Q29:["Very low","Low","Moderate","High","Very high"],Q31:["No impact","Low impact","Moderate impact","High impact","Very high impact"],Q32:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"],Q34:["Very easy","Easy","Moderately difficult","Difficult","Very difficult"]};
+
+const ageVoices={
+"13-17":[["😎","Main-character energy detected.","That answer has entered the group chat."],["😂","Okayyy, interesting choice.","The algorithm is taking notes."],["👀","Plot twist.","Nobody expected that one."],["📱","The scroll is getting serious.","Your feed would like a word."],["💀","BRO… the phone won.","The screen-time notification is trembling."]],
+"18-24":[["🧘","Peaceful. Suspiciously peaceful.","The algorithm has not won today."],["☕","A very reasonable answer.","Five minutes of scrolling… allegedly."],["👀","Okay, that is telling.","Your 2 AM self may have more context."],["😭","The 'one more reel' effect is real.","Somewhere, a notification just appeared."],["💀","We need to talk about that screen-time report.","The phone is basically a roommate now."]],
+"25-34":[["😌","Balanced. We respect it.","Productivity has survived another day."],["☕","Fair enough.","One notification never stays one notification."],["👀","Interesting trade-off.","Work mode and scroll mode are negotiating."],["📊","The habit is becoming noticeable.","Your weekly screen-time graph has entered the chat."],["💀","That phone has a full-time position in your life.","HR would like a meeting."]],
+"35-44":[["😌","That sounds pretty balanced.","Family, work and scrolling can coexist."],["😂","Fair answer.","Just checking one thing… famous last words."],["👀","Interesting.","The phone has definitely become part of the routine."],["📱","That habit is getting visible.","The notification bar knows everything."],["💀","The phone is basically another family member.","And it never sleeps."]],
+"45-59":[["🙂","A calm answer.","Technology is useful when it stays in its lane."],["☕","Makes sense.","One quick check can become a surprisingly long visit."],["👀","That's worth noticing.","The habit is becoming part of the daily rhythm."],["📱","The scroll is getting some serious airtime.","Your phone knows your routine."],["😂","Okay, the phone has officially become a daily companion.","It may need its own chair."]],
+"60+":[["🌳","A healthy-sounding rhythm.","The phone is a tool, not the whole day."],["🙂","Fair enough.","A quick look can be a nice way to stay connected."],["👀","Interesting answer.","The digital world is definitely part of the routine."],["📱","That's quite a bit of digital time.","The phone is getting plenty of attention."],["😂","The smartphone has clearly earned VIP status.","At this point it deserves tea."]]};
+
+
+/* QUESTION-SPECIFIC REACTION ENGINE
+   Each question has its own mini "meme voice".
+   The response intensity (1–5 / option position) chooses which reaction line appears.
+*/
+const questionReactions={
+Q01:[
+ ["👋","Welcome to the experiment!","Consent unlocked. Research mode activated."],
+ ["🤝","Thanks for joining.","Your answers will become part of the dataset."],
+ ["🔬","Participant mode: ON.","Let's see what the data says."],
+ ["🧪","Research quest accepted.","36 questions stand between you and the finish screen."],
+ ["🚀","Let's go.","The survey boss battle begins now."]
+],
+Q02:[
+ ["🌱","Just getting started.","Every generation experiences social media differently."],
+ ["📱","Different age, different feed.","Your perspective matters to the comparison."],
+ ["👀","Interesting demographic.","Now the reactions can speak your language."],
+ ["🧠","Experience level unlocked.","Let's see how your digital routine looks."],
+ ["🏆","Age-group profile locked.","Your answers will help compare patterns across generations."]
+],
+Q03:[
+ ["✨","Identity noted.","No algorithm can define a person from one answer."],
+ ["🙂","Got it.","Moving on to the digital-life questions."],
+ ["🌈","Thanks for sharing.","Your response is part of the demographic picture."],
+ ["🧩","Another data point added.","The research map is filling in."],
+ ["⭐","Profile updated.","Next challenge: your social-media routine."]
+],
+Q04:[
+ ["💼","Status loaded.","Now let's see how your routine fits around social media."],
+ ["☕","Busy life detected.","The phone is about to meet your schedule."],
+ ["📅","Routine unlocked.","Work, study, life… and notifications."],
+ ["📊","Context captured.","This makes the later answers more meaningful."],
+ ["🔥","Full schedule energy.","Let's see where scrolling fits in."]
+],
+Q05:[
+ ["📚","Knowledge level noted.","Now we enter the digital-world section."],
+ ["🎓","Education profile loaded.","The next questions are all about usage."],
+ ["🧠","Learning mode detected.","Social media has a different role for everyone."],
+ ["📖","Academic context added.","Now for the interesting part."],
+ ["🚀","Profile complete.","Digital habits, here we come."]
+],
+Q06:[
+ ["📱","One platform? Rare sight.","Your feed ecosystem is just beginning."],
+ ["🔄","A small social-media toolkit.","The algorithm has room to grow."],
+ ["📲","Multiple feeds detected.","Welcome to the app-switching Olympics."],
+ ["🌐","The digital universe is getting crowded.","Notifications may need their own timetable."],
+ ["💀","You have entered the multiverse.","There is an app for every mood."]
+],
+Q07:[
+ ["🌱","Low-scroll territory.","Your thumb gets plenty of rest."],
+ ["🙂","A moderate digital diet.","The feed has a seat, not the whole sofa."],
+ ["👀","That's a decent chunk of the day.","The scroll is officially part of the routine."],
+ ["📊","Screen-time territory detected.","Your weekly report has entered the chat."],
+ ["💀","Your phone has overtime.","The battery may be working harder than you."]
+],
+Q08:[
+ ["🧘","Occasional checker.","Notifications don't control the schedule."],
+ ["🙂","A few check-ins.","Pretty normal digital rhythm."],
+ ["👀","Frequent flyer status.","Your thumb knows the route."],
+ ["📱","The refresh button knows you personally.","Another check? Of course."],
+ ["💀","At this point the app should pay rent.","You two spend a lot of time together."]
+],
+Q09:[
+ ["🌙","Sleep mode respected.","The phone stays out of the bedtime storyline."],
+ ["😴","A little scrolling before bed.","The classic 'just one more' moment."],
+ ["👀","The bedtime feed has appeared.","Sleep is sharing the room with the algorithm."],
+ ["📱","Late-night scrolling detected.","Your pillow knows the routine."],
+ ["💀","The phone has a night shift.","Sleep is waiting in the lobby."]
+],
+Q10:[
+ ["☀️","Morning first, phone later.","A strong start to the day."],
+ ["🙂","A quick morning check.","The feed gets a polite hello."],
+ ["👀","The phone gets early access.","Notifications are apparently breakfast."],
+ ["📱","Morning scroll unlocked.","Your thumb wakes up before the rest of you."],
+ ["💀","Good morning… to the algorithm.","The sun is competing with the screen."]
+],
+Q11:[
+ ["🎯","Purpose identified.","Every feed has a reason for being there."],
+ ["🙂","A practical use.","The algorithm is serving a function."],
+ ["👀","Interesting motivation.","One app can play many roles."],
+ ["📱","Social media has a job description.","And apparently it is busy."],
+ ["🔥","The feed is doing overtime.","Entertainment, information, connection — all on one screen."]
+],
+Q12:[
+ ["😴","Sleep baseline recorded.","Now we can compare it with the scrolling questions."],
+ ["🌙","A decent night's rest.","The digital-life puzzle continues."],
+ ["👀","Sleep is getting interesting.","Let's see what happens before bedtime."],
+ ["📱","Sleep and scrolling are now officially in the same chapter.","Data mode activated."],
+ ["💀","Your sleep schedule has entered the storyline.","The phone may have a supporting role."]
+],
+Q13:[
+ ["😴","Bedtime stays bedtime.","The algorithm loses this round."],
+ ["🌙","Occasional delay.","A little scroll can stretch the clock."],
+ ["👀","The bedtime boundary is getting fuzzy.","The feed is negotiating."],
+ ["📱","The 'just five minutes' effect.","We have all met this character."],
+ ["💀","Sleep got postponed by the algorithm.","Tomorrow morning may have questions."]
+],
+Q14:[
+ ["🌙","Sleep quality noted.","The body has submitted its review."],
+ ["🙂","Sounds fairly steady.","Now let's connect lifestyle and digital habits."],
+ ["👀","Interesting balance.","The next answers may add context."],
+ ["📊","A noticeable sleep pattern.","The dataset is starting to connect dots."],
+ ["💀","Sleep has filed a complaint.","The notification bar may be involved."]
+],
+Q15:[
+ ["🏃","Movement unlocked.","Your body gets screen-free time."],
+ ["🙂","Some activity in the routine.","Nice counterbalance."],
+ ["👀","Active schedule detected.","The day has more than one mode."],
+ ["🔥","Strong activity rhythm.","The phone is not the only thing getting attention."],
+ ["🏆","Full-week energy.","The offline world is definitely getting time."]
+],
+Q16:[
+ ["🎯","Focus mode holding.","The feed is not winning this round."],
+ ["🙂","A little distraction.","The notification bar is testing boundaries."],
+ ["👀","Focus is getting interrupted.","The phone has entered the study/work zone."],
+ ["📱","Productivity has a notification problem.","One glance can become a scroll."],
+ ["💀","The to-do list is staring at you.","Meanwhile, the algorithm is thriving."]
+],
+Q17:[
+ ["✅","Tasks stay on schedule.","The scroll is not the boss."],
+ ["🙂","A little delay happens.","The digital world occasionally steals a minute."],
+ ["👀","Procrastination detected.","The task is waiting patiently… again."],
+ ["📱","The deadline is watching.","The feed has suspiciously good timing."],
+ ["💀","The task said 'finish me.'","The algorithm said 'one more reel.'"]
+],
+Q18:[
+ ["📚","Study/work stays protected.","Good boundary."],
+ ["🙂","Occasional multitasking.","Two worlds are sharing the screen."],
+ ["👀","The apps are competing for attention.","Productivity has a co-worker now."],
+ ["📱","Multitasking mode activated.","Your brain has several tabs open too."],
+ ["💀","The study session has become a social-media session.","The notes are waiting."]
+],
+Q19:[
+ ["🧘","Stopping is easy.","You are driving the scroll."],
+ ["🙂","A little resistance.","The feed has some negotiating power."],
+ ["👀","Stopping takes effort.","The algorithm has learned your weak spot."],
+ ["📱","The exit button feels suspiciously far away.","The scroll is holding the meeting."],
+ ["💀","You came to stop. The feed said no.","Boss battle: closing the app."]
+],
+Q20:[
+ ["⏱️","Time awareness unlocked.","The clock wins this round."],
+ ["🙂","It happens occasionally.","Five minutes can stretch."],
+ ["👀","The time warp has appeared.","Where did those minutes go?" ],
+ ["📱","Time slipped through the feed.","The clock is asking questions."],
+ ["💀","You entered for five minutes and returned from another dimension.","Classic."]
+],
+Q21:[
+ ["🤝","Offline interaction unlocked.","Humans are still in the game."],
+ ["🙂","Regular face-to-face time.","Nice balance between online and offline."],
+ ["👀","The offline world gets some airtime.","Interesting comparison ahead."],
+ ["🧑‍🤝‍🧑","Real-life social mode is active.","The screen is not the whole story."],
+ ["🏆","Offline life is fully loaded.","The humans outside the phone approve."]
+],
+Q22:[
+ ["💬","Face-to-face still wins.","The phone can wait."],
+ ["🙂","A little digital preference.","Convenience enters the chat."],
+ ["👀","Online communication is becoming the default.","Interesting social shift."],
+ ["📱","The screen is doing more talking.","Real-life conversations may be getting competition."],
+ ["💀","The phone is basically your spokesperson.","It has accepted the job."]
+],
+Q23:[
+ ["🤝","Offline time is protected.","The digital world has not taken over."],
+ ["🙂","A small shift.","The phone is making a little room for itself."],
+ ["👀","The balance is changing.","Offline time is noticing."],
+ ["📱","Digital time is taking a bigger slice.","The offline calendar is getting squeezed."],
+ ["💀","The phone has started stealing calendar slots.","Offline life would like them back."]
+],
+Q24:[
+ ["🧠","Brain battery looks okay.","The scroll has not drained the tank."],
+ ["🙂","Some mental fatigue.","A little digital recovery may help."],
+ ["👀","Your brain is noticing the load.","The feed is not exactly free energy."],
+ ["📱","Mental battery warning.","The scroll session is getting expensive."],
+ ["💀","Brain.exe has stopped responding.","The feed may have had a long meeting."]
+],
+Q25:[
+ ["🌱","Comparison stays low.","Your timeline is not running your self-worth."],
+ ["🙂","Occasional comparison.","Pretty human response to curated feeds."],
+ ["👀","The comparison trap is visible.","Remember: feeds show highlights, not whole lives."],
+ ["📱","The highlight reel is getting persuasive.","Your brain is doing side-by-side comparisons."],
+ ["💀","The algorithm has opened a comparison spreadsheet.","Nobody asked for that meeting."]
+],
+Q26:[
+ ["🙂","Mood stays mostly steady.","The feed is not running the emotional dashboard."],
+ ["😌","A little influence.","Digital content can nudge a day."],
+ ["👀","Mood impact is showing up.","The content matters as much as the time."],
+ ["📱","The feed is getting emotional influence.","That is worth noticing."],
+ ["💀","The algorithm has been promoted to mood manager.","It did not apply for the job."]
+],
+Q27:[
+ ["🧘","No-notification check needed.","The phone can sit quietly."],
+ ["🙂","Occasional reflex.","A quick check is easy to explain."],
+ ["👀","Habit loop detected.","Your hand knows what to do before you think."],
+ ["📱","The phantom-check is strong.","No notification? Check anyway."],
+ ["💀","The phone is calling without calling.","Your thumb already knows."]
+],
+Q28:[
+ ["🌱","Positive territory.","The digital world seems to be adding value."],
+ ["🙂","Mostly positive.","The balance looks constructive."],
+ ["😐","Neutral ground.","Social media has upsides and trade-offs."],
+ ["👀","Some negative impact.","The costs are becoming noticeable."],
+ ["⚠️","Strong negative impact reported.","That is an important research data point."]
+],
+Q29:[
+ ["🌱","Low-use mode.","Your scroll footprint is pretty small."],
+ ["🙂","Moderate use.","The phone has a role, not the whole stage."],
+ ["👀","Mid-range usage.","The feed has a solid presence."],
+ ["📊","High-use territory.","Your screen-time graph is probably interesting."],
+ ["💀","Very high-use mode unlocked.","The phone has become a major daily activity."]
+],
+Q30:[
+ ["😌","Self-control confidence.","You feel your usage is within bounds."],
+ ["🙂","Probably under control.","The phone is not completely running the schedule."],
+ ["🤔","Uncertain territory.","The data gets interesting here."],
+ ["👀","You think there is some excess.","The screen-time report may agree."],
+ ["💀","The phone has been exposed.","The 'I should scroll less' committee is meeting."]
+],
+Q31:[
+ ["🌱","Low daily impact.","The phone stays in the background."],
+ ["🙂","Some influence.","It is part of life without dominating it."],
+ ["👀","Moderate impact.","The digital world has a noticeable footprint."],
+ ["📱","High impact territory.","The phone is a major daily character."],
+ ["💀","Very high impact.","The smartphone has become a main cast member."]
+],
+Q32:[
+ ["😕","Very dissatisfied.","Your current digital routine is not feeling great."],
+ ["🙂","Some dissatisfaction.","There is room for a better balance."],
+ ["😐","Neutral.","The current routine is neither clearly good nor bad."],
+ ["😊","Satisfied.","Your current usage feels reasonably comfortable."],
+ ["🏆","Very satisfied.","Your digital routine feels right for you."]
+],
+Q33:[
+ ["🌱","No reduction attempts yet.","The current routine has not triggered a reset."],
+ ["🙂","One experiment.","You have tested the brakes."],
+ ["👀","A few attempts.","Changing digital habits can take practice."],
+ ["📱","Many attempts.","The habit is proving persistent."],
+ ["🔥","Currently working on it.","Active habit-change mode unlocked."]
+],
+Q34:[
+ ["🧘","Easy mode.","Changing the routine feels manageable."],
+ ["🙂","Mostly manageable.","A few boundaries may do the trick."],
+ ["👀","Moderate challenge.","The habit has some momentum."],
+ ["📱","Hard mode.","The feed has strong gravitational pull."],
+ ["💀","Boss battle.","The algorithm is not giving up without a fight."]
+],
+Q35:[
+ ["💡","Clear benefit identified.","Your answer adds context to the numbers."],
+ ["📚","Knowledge or connection angle.","Social media is doing useful work here."],
+ ["👀","Interesting trade-off.","The same technology can create different effects."],
+ ["📱","A meaningful impact reported.","This helps explain the quantitative answers."],
+ ["🧠","Big-picture insight unlocked.","This is exactly the kind of context researchers need."]
+],
+Q36:[
+ ["✍️","Final thoughts unlocked.","One last piece of your experience."],
+ ["💭","Interesting perspective.","Qualitative answers can add context to the numbers."],
+ ["🧩","The story is filling in.","Your explanation adds another layer."],
+ ["🔬","Research notes received.","Context can be as useful as a rating."],
+ ["🏆","Final-boss response unlocked.","You made it through all 36 questions."]
+]
+};
+
+// Meme reaction content: reuse the question-specific reaction pool as the
+// source for the animated meme cards. The GIF itself is selected from
+// memeAssets below, so every answered question can unlock a visual meme.
+const memeDrops = questionReactions;
+
+const sectionFlavour={"Social Media Usage":["Your feed has entered the storyline.","The scroll-o-meter is watching."],"Sleep & Lifestyle":["Your sleep schedule just got a cameo.","The night-mode department is listening."],"Productivity & Daily Life":["Productivity mode has joined the chat.","The to-do list is watching from a distance."],"Offline Social Interaction":["Real life has entered the chat.","The humans outside the screen are taking notes."],"Self-Reported Impact":["Your brain has submitted a data point.","That answer says something interesting about the experience."],"Overall Self-Assessment":["Final-boss energy.","Your own verdict matters here."],"Overall Social Media Impact":["The big picture is loading.","Research mode: activated."]};
+
+
+const memeAssets={"Q01":["meme_q01_v1","meme_q01_v2","meme_q01_v3"],"Q02":["meme_q02_v1","meme_q02_v2","meme_q02_v3"],"Q03":["meme_q03_v1","meme_q03_v2","meme_q03_v3"],"Q04":["meme_q04_v1","meme_q04_v2","meme_q04_v3"],"Q05":["meme_q05_v1","meme_q05_v2","meme_q05_v3"],"Q06":["meme_q06_v1","meme_q06_v2","meme_q06_v3"],"Q07":["meme_q07_v1","meme_q07_v2","meme_q07_v3"],"Q08":["meme_q08_v1","meme_q08_v2","meme_q08_v3"],"Q09":["meme_q09_v1","meme_q09_v2","meme_q09_v3"],"Q10":["meme_q10_v1","meme_q10_v2","meme_q10_v3"],"Q11":["meme_q11_v1","meme_q11_v2","meme_q11_v3"],"Q12":["meme_q12_v1","meme_q12_v2","meme_q12_v3"],"Q13":["meme_q13_v1","meme_q13_v2","meme_q13_v3"],"Q14":["meme_q14_v1","meme_q14_v2","meme_q14_v3"],"Q15":["meme_q15_v1","meme_q15_v2","meme_q15_v3"],"Q16":["meme_q16_v1","meme_q16_v2","meme_q16_v3"],"Q17":["meme_q17_v1","meme_q17_v2","meme_q17_v3"],"Q18":["meme_q18_v1","meme_q18_v2","meme_q18_v3"],"Q19":["meme_q19_v1","meme_q19_v2","meme_q19_v3"],"Q20":["meme_q20_v1","meme_q20_v2","meme_q20_v3"],"Q21":["meme_q21_v1","meme_q21_v2","meme_q21_v3"],"Q22":["meme_q22_v1","meme_q22_v2","meme_q22_v3"],"Q23":["meme_q23_v1","meme_q23_v2","meme_q23_v3"],"Q24":["meme_q24_v1","meme_q24_v2","meme_q24_v3"],"Q25":["meme_q25_v1","meme_q25_v2","meme_q25_v3"],"Q26":["meme_q26_v1","meme_q26_v2","meme_q26_v3"],"Q27":["meme_q27_v1","meme_q27_v2","meme_q27_v3"],"Q28":["meme_q28_v1","meme_q28_v2","meme_q28_v3"],"Q29":["meme_q29_v1","meme_q29_v2","meme_q29_v3"],"Q30":["meme_q30_v1","meme_q30_v2","meme_q30_v3"],"Q31":["meme_q31_v1","meme_q31_v2","meme_q31_v3"],"Q32":["meme_q32_v1","meme_q32_v2","meme_q32_v3"],"Q33":["meme_q33_v1","meme_q33_v2","meme_q33_v3"],"Q34":["meme_q34_v1","meme_q34_v2","meme_q34_v3"],"Q35":["meme_q35_v1","meme_q35_v2","meme_q35_v3"],"Q36":["meme_q36_v1","meme_q36_v2","meme_q36_v3"]};
+const memeAssetTitle={};
+Object.keys(memeAssets).forEach(k=>memeAssets[k].forEach((a,n)=>memeAssetTitle[a]=`ORIGINAL DOODLE MEME • ${k} • V${n+1}`));
+const stickerGifs=["sparkle","heart_pop","wow","sleepy","side_eye","nice","tap_tap","confetti","tiny_star"];
+const questionThemes={Q01:"sky",Q02:"sky",Q03:"sun",Q04:"sun",Q05:"mint",Q06:"social",Q07:"night",Q08:"night",Q09:"night",Q10:"sun",Q11:"social",Q12:"lavender",Q13:"lavender",Q14:"lavender",Q15:"mint",Q16:"blueprint",Q17:"warning",Q18:"blueprint",Q19:"warning",Q20:"warning",Q21:"social",Q22:"social",Q23:"social",Q24:"brain",Q25:"brain",Q26:"brain",Q27:"night",Q28:"scrap",Q29:"scrap",Q30:"scrap",Q31:"final",Q32:"final",Q33:"final",Q34:"final",Q35:"final",Q36:"final"};
+const questionLayouts={Q01:"pinterest",Q02:"scrapbook",Q03:"chat",Q04:"warning",Q05:"scrapbook",Q06:"ig",Q07:"pinterest",Q08:"chat",Q09:"pinterest",Q10:"scrapbook",Q11:"ig",Q12:"pinterest",Q13:"chat",Q14:"pinterest",Q15:"scrapbook",Q16:"blueprint",Q17:"warning",Q18:"scrapbook",Q19:"warning",Q20:"pinterest",Q21:"chat",Q22:"ig",Q23:"chat",Q24:"pinterest",Q25:"pinterest",Q26:"scrapbook",Q27:"chat",Q28:"pinterest",Q29:"scrapbook",Q30:"chat",Q31:"warning",Q32:"ig",Q33:"pinterest",Q34:"scrapbook",Q35:"warning",Q36:"ig"};
+const themeLabels={sky:"fresh start",sun:"daily chaos",mint:"good-vibes mode",social:"social world",night:"late-night mode",lavender:"soft mode",blueprint:"focus lab",warning:"boss-fight",brain:"brain check",scrap:"sticky-note mode",final:"final boss"};
+function questionTheme(q){return questionThemes[q.id]||"sky"}
+function questionLayout(q){return questionLayouts[q.id]||"pinterest"}
+function memeFrameTop(layout){
+ const data={ig:["📸","scrollwise.daily","Suggested for you"],pinterest:["📌","scrollwise.memebox","Saved for later"],chat:["💬","scrollwise.groupchat","2 unread messages"],scrapbook:["📝","scrollwise.diary","Today’s digital-life note"],warning:["🚨","scrollwise.bossfight","Attention required"]}[layout]||["😂","scrollwise.memebox","meme drop"];
+ return data;
+}
+function memeFor(q,intensity){
+ const set=memeDrops[q.id]||[];
+ const assets=memeAssets[q.id]||[];
+ if(!set.length || !assets.length)return null;
+ const pick=set[(intensity + i + responseNonce) % set.length];
+ const variant=(intensity + responseNonce + i) % assets.length;
+ const asset=assets[variant];
+ const sticker=stickerGifs[(intensity*2 + responseNonce + i) % stickerGifs.length];
+ const meterLabels=["CHILL MODE","LOW CHAOS","MID CHAOS","HIGH ENERGY","PLOT TWIST"];
+ const meterEmoji=["🌱","🙂","👀","✨","💀"];
+ return {emoji:pick[0],title:pick[1],body:pick[2],label:meterLabels[intensity]||"MID CHAOS",meterEmoji:meterEmoji[intensity]||"👀",percent:(intensity+1)*20,asset,assetTitle:memeAssetTitle[asset]||"MEME DROP",layout:questionLayout(q),theme:questionTheme(q),sticker};
+}
+function levelInfo(n){
+ const groups=[
+  [1,5,"🌱","LEVEL 1","WHO ARE YOU?","Character setup complete. Now meet the feed."],
+  [6,11,"📱","LEVEL 2","DIGITAL WORLD","Your apps are loaded. Let the scrolling lore begin."],
+  [12,15,"🌙","LEVEL 3","SLEEP & LIFESTYLE","The alarm clock has entered the arena."],
+  [16,20,"🎯","LEVEL 4","PRODUCTIVITY","Your to-do list is about to fight the algorithm."],
+  [21,23,"🤝","LEVEL 5","REAL LIFE","Offline humans have joined the game."],
+  [24,27,"🧠","LEVEL 6","IMPACT","Time to see how the feed feels in everyday life."],
+  [28,30,"⚖️","LEVEL 7","SELF-ASSESSMENT","Your own verdict on your digital routine."],
+  [31,36,"🏆","LEVEL 8","FINAL CHALLENGE","Final questions. Final boss. Then: GG."],
+ ];
+ return groups.find(x=>n>=x[0]&&n<=x[1])||groups[0];
+}
+function levelDrop(n){
+ const x=levelInfo(n);
+ return `<div class="levelDrop"><div class="levelDropIcon">${x[2]}</div><div><small>${x[3]}</small><strong>${x[4]}</strong></div><span>${x[5]}</span></div>`;
+}
+function sectionOneIntro(){
+ return `<div class="sectionIntro"><div class="sectionIntroBadge">🎮 STARTING ZONE</div><div class="sectionIntroTitle">LEVEL 1 • GET TO KNOW YOU</div><div class="sectionIntroText">Before the scrolling questions begin, we need a few basic answers. No right or wrong answers — just pick what fits you.</div><div class="sectionIntroSteps"><span>👋 Consent</span><span>🎂 Age</span><span>🧑 Gender</span><span>💼 Status</span><span>🎓 Education</span></div></div>`;
+}
+function burst(){
+ const icons=["😂","📱","✨","💀","🔥","👀","🎮","🧠"];
+ for(let n=0;n<7;n++){
+  const el=document.createElement("div");el.className="burst";el.textContent=icons[Math.floor(Math.random()*icons.length)];el.style.left=(48+Math.random()*8-4)+"%";el.style.top=(43+Math.random()*8-4)+"%";el.style.setProperty("--dx",((Math.random()*2-1)*150)+"px");el.style.setProperty("--dy",(-50-Math.random()*130)+"px");el.style.setProperty("--rot",((Math.random()*2-1)*80)+"deg");document.body.appendChild(el);setTimeout(()=>el.remove(),950);
+ }
+}
+function level(n){if(n<=5)return"LEVEL 1 • YOU";if(n<=11)return"LEVEL 2 • DIGITAL WORLD";if(n<=15)return"LEVEL 3 • SLEEP & LIFESTYLE";if(n<=20)return"LEVEL 4 • PRODUCTIVITY";if(n<=23)return"LEVEL 5 • REAL LIFE";if(n<=27)return"LEVEL 6 • IMPACT";if(n<=30)return"LEVEL 7 • SELF-ASSESSMENT";return"LEVEL 8 • FINAL CHALLENGE"}
+function answerIntensity(q,value){if(q.type==="multi"){const n=Array.isArray(value)?value.length:0;return Math.max(0,Math.min(4,n-1))}if(q.type==="scale"){const n=parseInt(value,10);return Math.max(0,Math.min(4,isNaN(n)?2:n-1))}const vals=q.options||[],idx=vals.indexOf(value);if(idx<0)return 2;if(vals.length===5)return idx;if(vals.length<=2)return idx===0?1:3;return Math.round(idx*4/Math.max(1,vals.length-1))}
+function reactionFor(q,value){
+ const intensity=answerIntensity(q,value);
+ const set=questionReactions[q.id]||[];
+ const specific=set[intensity]||set[2]||["✨","Interesting answer.","This adds another useful research data point."];
+ const voice=ageVoices[AGE]||ageVoices["18-24"];
+ const ageExtra=voice[(intensity+i)%voice.length][2];
+ const flavour=(sectionFlavour[q.section]||["Interesting data point."])[(i+intensity)%2];
+ return {
+   emoji:specific[0],
+   caption:specific[1],
+   sub:specific[2]+" "+ageExtra+" "+flavour,
+   percent:(intensity+1)*20
+ };
+}
+let soundEnabled=true;
+let responseNonce=0;
+let xp=0, streak=0, badges=0;
+const awardedQuestions=new Set();
+let bonusBusy=false;
+let audioCtx=null;
+function playCuteTap(){
+ if(!soundEnabled) return;
+ try{
+  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  const now=audioCtx.currentTime;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type='sine';
+  osc.frequency.setValueAtTime(880,now);
+  osc.frequency.exponentialRampToValueAtTime(1320,now+0.055);
+  gain.gain.setValueAtTime(0.0001,now);
+  gain.gain.exponentialRampToValueAtTime(0.12,now+0.008);
+  gain.gain.exponentialRampToValueAtTime(0.0001,now+0.12);
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.start(now);osc.stop(now+0.13);
+ }catch(e){}
+}
+function updateSoundToggle(){
+ const b=document.getElementById('soundToggle');
+ if(!b)return;
+ b.textContent=soundEnabled?'🔊 Cute sounds: ON':'🔇 Cute sounds: OFF';
+ b.classList.toggle('off',!soundEnabled);
+ b.setAttribute('aria-pressed',String(soundEnabled));
+}
+
+
+function updateGameHud(){
+ const x=document.getElementById('xp'),s=document.getElementById('streak'),b=document.getElementById('badges');
+ if(x)x.textContent=xp;if(s)s.textContent=streak;if(b)b.textContent=badges;
+}
+function floatXP(amount){
+ const el=document.createElement('div');el.className='xpFloat';el.textContent=`+${amount} XP`;
+ el.style.left=(window.innerWidth/2-35)+'px';el.style.top=Math.max(110,window.innerHeight*.28)+'px';
+ document.body.appendChild(el);setTimeout(()=>el.remove(),950);
+}
+function awardXP(q,value){
+ if(awardedQuestions.has(q.id))return;
+ awardedQuestions.add(q.id);
+ const amount=20+answerIntensity(q,value)*10;
+ xp+=amount;streak++;
+ if(streak%5===0){xp+=50;badges++;burst();}
+ floatXP(amount+(streak%5===0?50:0));updateGameHud();
+}
+function launchBonusRound(afterIndex){
+ if(bonusBusy)return;bonusBusy=true;
+ const overlay=document.createElement('div');overlay.className='bonusOverlay';
+ overlay.innerHTML=`<div class="bonusCard">
+ <div style="font-size:14px;font-weight:1000;letter-spacing:1px">🎮 BONUS ROUND</div>
+ <h2>Catch the emoji!</h2>
+ <p>Tap the target 3 times before the timer runs out. This changes <b>only game XP</b>, never your research answer.</p>
+ <div class="bonusTarget" role="button" tabindex="0" aria-label="Tap the bonus emoji">🎯</div>
+ <div class="bonusResult">Ready?</div><div class="bonusTimer"><div></div></div>
+ <button type="button" class="btn primary" data-bonus-skip>Skip bonus →</button></div>`;
+ document.body.appendChild(overlay);
+ const target=overlay.querySelector('.bonusTarget'),result=overlay.querySelector('.bonusResult'),timer=overlay.querySelector('.bonusTimer div');
+ let hits=0,ended=false,start=performance.now();
+ const finish=won=>{
+  if(ended)return;ended=true;
+  if(won){xp+=50;badges++;result.textContent='🎉 +50 XP • Bonus badge unlocked!';floatXP(50);burst();playCuteTap();}
+  else result.textContent='⏱️ Round over — research data unchanged.';
+  updateGameHud();setTimeout(()=>{overlay.remove();bonusBusy=false;i=afterIndex;render('next')},won?850:650);
+ };
+ const hit=()=>{if(ended)return;hits++;target.textContent=['🎯','✨','🦄','💫','🎮'][hits%5];target.style.transform=`scale(${1+Math.min(hits,4)*.06}) rotate(${hits%2?6:-6}deg)`;playCuteTap();if(hits>=3)finish(true)};
+ target.onclick=hit;target.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit()}};
+ overlay.querySelector('[data-bonus-skip]').onclick=()=>finish(false);
+ const tick=now=>{if(ended)return;const pct=Math.max(0,1-(now-start)/5000);timer.style.transform=`scaleX(${pct})`;if(pct<=0)finish(false);else requestAnimationFrame(tick)};
+ requestAnimationFrame(tick);
+}
+function showReaction(q,value){
+ if(!value||q.type==="text")return"";
+ const r=reactionFor(q,value), intensity=answerIntensity(q,value), m=memeFor(q,intensity);
+ if(!m)return `<div class="reaction"><div class="reactionEmoji">${r.emoji}</div><div class="reactionText"><div class="reactionTag">Question reaction • ${AGE||"your group"}</div><div class="reactionCaption">${r.caption}</div><div class="reactionSub">${r.sub}</div><div class="meter"><div style="width:${r.percent}%"></div></div></div></div>`;
+ const isInstagram=q.id==="Q06" && Array.isArray(value) && value.includes("Instagram");
+ const frameInfo=memeFrameTop(m.layout);
+ const caption=isInstagram
+   ? ["POV: you opened Instagram for 5 minutes.","The feed: one more reel.","Researcher: how long were you scrolling? 😭"][intensity%3]
+   : m.body;
+ const likes=(820 + intensity*547 + i*31 + responseNonce*17).toLocaleString();
+ const pillSet=isInstagram?["😂 LOL","🔥 TOO REAL","📱 ONE MORE REEL"]:["😂 LOL","🔥 TOO REAL","👀 CALLED OUT"];
+ const responseCaption=isInstagram
+   ? ["POV: you opened Instagram for 5 minutes.","The feed: one more reel.","Researcher: that answer is going in the notes."][responseNonce%3]
+   : [m.body,"This answer unlocked a suspiciously relatable moment.","The doodle committee has reviewed your response."][responseNonce%3];
+ return `<div class="reaction"><div class="reactionEmoji">${r.emoji}</div><div class="reactionText"><div class="reactionTag">REACTION • ${AGE||"YOUR GROUP"}</div><div class="reactionCaption">${r.caption}</div><div class="reactionSub">${r.sub}</div><div class="meter"><div style="width:${r.percent}%"></div></div></div></div>
+ <div class="responseMemeStage memeDropWrap">
+   <div class="memeFrame responseMeme ${m.layout} rounded-3xl border-4 bg-white shadow-xl" data-meme-post="1">
+     <div class="memeStamp">${m.meterEmoji} ${m.label}</div>
+     <img class="memeGifSticker" src="assets/stickers/${m.sticker}.gif" alt="Animated doodle sticker">
+     <span class="memeStaticSticker">✨ NEW MEME #${responseNonce+1}</span>
+     <div class="memeFrameTop flex items-center gap-3"><div class="memeAvatar">${frameInfo[0]}</div><div class="memeAccount flex-1">${frameInfo[1]}<small>${frameInfo[2]}</small></div><div class="memeDots">•••</div></div>
+     <div class="memeImage"><img class="mainMeme" src="assets/memes/${m.asset}.jpg" alt="${m.assetTitle}" loading="eager"></div>
+     <div class="memeCaptionBand"><em>“${responseCaption}”</em></div>
+     <div class="memeActions"><button class="memeAction" type="button" data-action="like" aria-label="Like meme">♡</button><button class="memeAction" type="button" data-action="laugh" aria-label="Laugh reaction">😂</button><button class="memeAction" type="button" data-action="share" aria-label="Share meme">➤</button><button class="memeAction save" type="button" data-action="save" aria-label="Save meme">🔖</button></div>
+     <div class="memeMeta"><button class="memePill" type="button" data-react="${pillSet[0]}">${pillSet[0]}</button><button class="memePill" type="button" data-react="${pillSet[1]}">${pillSet[1]}</button><button class="memePill" type="button" data-react="${pillSet[2]}">${pillSet[2]}</button></div>
+     <div class="memeChoiceRow"><span>🧩 unique response meme</span><span>🎞️ sticker GIF</span><span>✏️ doodle style</span></div>
+     <div class="memeFooter"><span data-like-count>${likes}</span> likes • ${isInstagram?'Instagram-style':'original doodle'} • ${themeLabels[m.theme]||'meme drop'}</div>
+   </div>
+   <div class="cuteSoundBadge">✨ Cute tap sound <span>•</span> <button type="button" data-sound-inline>turn ${soundEnabled?'off':'on'}</button></div>
+   <div class="doodleTags"><span class="doodleTag">${isInstagram?'📸 Instagram':'🖼️ Meme'}</span><span class="doodleTag">🎞️ sticker</span><span class="doodleTag">tap to react</span></div>
+   <div class="memeHint">New meme + new sticker on every response. Your research answer remains unchanged.</div>
+ </div>`;
+}
+function render(direction="none"){const q=Q[i],scene=document.getElementById("scene");document.getElementById("level").textContent=level(i+1);document.getElementById("count").textContent=`Question ${i+1} of ${Q.length}`;document.getElementById("progress").style.width=((i+1)/Q.length*100)+"%";const ag=document.getElementById("age");ag.textContent=AGE?"🧑 Age group: "+AGE:"";ag.classList.toggle("hidden",!AGE);const windowClass=direction==="next"?"slide-next":direction==="back"?"slide-back":"no-slide";const theme=questionTheme(q);scene.innerHTML=`<div class="questionWindow theme-${theme} ${windowClass}"><div class="doodleHeader"><div class="doodleSticker">${icons[q.section]||"✨"}</div><div class="doodleHeaderText"><div class="doodleKicker">${q.section} • ${themeLabels[theme]||"research mode"}</div><div class="doodleHeaderTitle">Question ${i+1}: ${q.question.length>52?q.question.slice(0,49)+"…":q.question}</div></div><div class="doodleTape"></div></div>${i===0?sectionOneIntro():""}${[1,6,12,16,21,24,28,31].includes(i+1)?levelDrop(i+1):""}<div class="icon">${icons[q.section]||"✨"}</div><div class="q">${q.question}</div><div class="hint">${q.type==="multi"?"Select all that apply.":q.type==="text"?"Optional — share anything else you would like to add.":"Choose the answer that best describes you."}</div>`;
+const chosen=A[q.id];
+if(q.type==="text"){
+ const t=document.createElement("textarea");
+ t.placeholder="Your response...";
+ t.value=A[q.id]||"";
+ const win=scene.querySelector(".questionWindow");
+ t.oninput=()=>{
+   const wasEmpty=!String(A[q.id]||"").trim();
+   A[q.id]=t.value;
+   const existing=win.querySelector(".responseMemeStage");
+   if(t.value.trim() && wasEmpty){ responseNonce++; awardXP(q,t.value); win.insertAdjacentHTML("beforeend",showReaction(q,t.value)); playCuteTap(); }
+   if(!t.value.trim() && existing) existing.remove();
+ };
+ win.appendChild(t);
+ if(String(chosen||"").trim()) win.insertAdjacentHTML("beforeend",showReaction(q,chosen));
+ document.getElementById("next").disabled=!String(t.value||"").trim();
+}
+else{const box=document.createElement("div");box.className=q.type==="scale"?"scale":"opts";const vals=q.type==="scale"?q.options.map((_,n)=>String(n+1)):q.options;vals.forEach((v,k)=>{const b=document.createElement("button");b.className="opt";const selected=q.type==="multi"?(A[q.id]||[]).includes(v):A[q.id]===v;if(selected)b.classList.add("sel");if(q.type==="scale")b.innerHTML=`<span class="num">${k+1}</span><strong>${k+1}</strong><small>${scaleText[q.id][k]}</small>`;else b.innerHTML=`<span class="num">${k+1}</span>${v}`;b.onclick=()=>{if(q.type==="multi"){const old=A[q.id]||[];A[q.id]=old.includes(v)?old.filter(x=>x!==v):[...old,v]}else A[q.id]=v;if(q.id==="Q02")AGE=v;responseNonce++;awardXP(q,A[q.id]);render();playCuteTap();};box.appendChild(b)});scene.querySelector(".questionWindow").appendChild(box);if(chosen&&(!Array.isArray(chosen)||chosen.length))scene.querySelector(".questionWindow").insertAdjacentHTML("beforeend",showReaction(q,chosen));document.getElementById("next").disabled=!(chosen&&(!Array.isArray(chosen)||chosen.length))}
+const nextBtn=document.getElementById("next");
+const answerReady=hasAnswer(q, A[q.id]);
+nextBtn.disabled=!answerReady;
+nextBtn.setAttribute("aria-disabled", String(!answerReady));
+nextBtn.classList.toggle("ready", answerReady);
+const backBtn=document.getElementById("back");
+backBtn.disabled=i===0;
+document.getElementById("toast").textContent=chosen&&(!Array.isArray(chosen)||chosen.length)?"Answer selected — Continue is ready.":(AGE&&ageVoices[AGE]?ageVoices[AGE][i%5][2]:"Pick an answer to unlock your reaction.");scene.querySelector(".questionWindow").insertAdjacentHTML("beforeend","</div>")}
+function showWelcome(){document.getElementById("welcome").classList.remove("hidden");document.getElementById("survey").classList.add("hidden");document.getElementById("finish").classList.add("hidden")}
+function showSurvey(){document.getElementById("welcome").classList.add("hidden");document.getElementById("finish").classList.add("hidden");document.getElementById("survey").classList.remove("hidden");render()}
+function showFinish(message){document.getElementById("survey").classList.add("hidden");document.getElementById("welcome").classList.add("hidden");document.getElementById("finish").classList.remove("hidden");document.getElementById("finishText").textContent=message}
+function hasAnswer(q,value){return value!==undefined && value!==null && (q.type!=="multi" || (Array.isArray(value)&&value.length>0))}
+
+document.addEventListener("click",(e)=>{
+  const start=e.target.closest("#start");
+  if(start){e.preventDefault();showSurvey();return}
+  const back=e.target.closest("#back");
+  if(back){e.preventDefault();if(i>0){i--;render("back")}return}
+  const next=e.target.closest("#next");
+  if(next){
+    e.preventDefault();
+    e.stopPropagation();
+    const q=Q[i], value=A[q.id];
+    if(!hasAnswer(q,value)){document.getElementById("toast").textContent="Please choose an answer first.";return}
+    if(q.id==="Q01"&&value==="No"){showFinish("Thank you for your time. Your response was not recorded because consent was not given.");return}
+    if(i<Q.length-1){i++;render("next");return}
+    (async()=>{
+      let saved=false;
+      try{
+        const controller=new AbortController();
+        const timer=setTimeout(()=>controller.abort(),4000);
+        const r=await fetch("http://127.0.0.1:8000/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:A}),signal:controller.signal});
+        clearTimeout(timer);
+        saved=r.ok;
+      }catch(err){}
+      showFinish(saved?"Your response has been saved to the research workbook. Thank you for contributing!":"Journey complete. Start the backend to save responses to Excel.");
+    })();
+    return;
+  }
+  const post=e.target.closest('[data-meme-post]');
+  if(post){
+    const action=e.target.closest('[data-action]');
+    const react=e.target.closest('[data-react]');
+    const count=post.querySelector('[data-like-count]');
+    if(action){
+      if(action.dataset.action==='like'){
+        action.classList.toggle('liked');
+        const base=parseInt((count?.textContent||'0').replace(/,/g,''),10)||0;
+        if(count) count.textContent=(base+(action.classList.contains('liked')?1:-1)).toLocaleString();
+      }else if(action.dataset.action==='save'){
+        action.classList.toggle('liked');
+      }
+      playCuteTap();
+      return;
+    }
+    if(react){
+      post.querySelectorAll('[data-react]').forEach(x=>x.classList.remove('active'));
+      react.classList.add('active');
+      playCuteTap();
+      return;
+    }
+    if(e.target.closest('.memeImage')) playCuteTap();
+  }
+
+
+  const soundBtn=e.target.closest('#soundToggle');
+  if(soundBtn){e.preventDefault();soundEnabled=!soundEnabled;updateSoundToggle();return}
+  const inlineSound=e.target.closest('[data-sound-inline]');
+  if(inlineSound){e.preventDefault();soundEnabled=!soundEnabled;updateSoundToggle();return}
+  const again=e.target.closest("#again");
+  if(again){e.preventDefault();i=0;A={};AGE="";responseNonce=0;xp=0;streak=0;badges=0;awardedQuestions.clear();updateGameHud();showWelcome();return}
+});
+
+updateSoundToggle();
+updateGameHud();
+showWelcome();
+</script></body></html>

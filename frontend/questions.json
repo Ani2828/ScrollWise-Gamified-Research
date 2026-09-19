@@ -1,0 +1,484 @@
+[
+  {
+    "id": "Q01",
+    "section": "Consent",
+    "question": "Do you voluntarily agree to participate in this academic research survey?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q02",
+    "section": "Demographic Information",
+    "question": "What is your age?",
+    "options": [
+      "13-17",
+      "18-24",
+      "25-34",
+      "35-44",
+      "45-59",
+      "60+"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q03",
+    "section": "Demographic Information",
+    "question": "What is your gender?",
+    "options": [
+      "Male",
+      "Female",
+      "Non-binary / Other",
+      "Prefer not to say"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q04",
+    "section": "Demographic Information",
+    "question": "What is your current occupation/status?",
+    "options": [
+      "School student",
+      "College/university student",
+      "Working professional",
+      "Self-employed",
+      "Homemaker",
+      "Retired",
+      "Currently not working",
+      "Other"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q05",
+    "section": "Demographic Information",
+    "question": "What is your highest/current level of education?",
+    "options": [
+      "School",
+      "Diploma",
+      "Undergraduate",
+      "Postgraduate",
+      "Doctoral",
+      "Other"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q06",
+    "section": "Social Media Usage",
+    "question": "Which social media platforms do you regularly use?",
+    "options": [
+      "Instagram",
+      "YouTube",
+      "Facebook",
+      "WhatsApp",
+      "Snapchat",
+      "X",
+      "Reddit",
+      "LinkedIn",
+      "Telegram",
+      "Other",
+      "None"
+    ],
+    "type": "multi"
+  },
+  {
+    "id": "Q07",
+    "section": "Social Media Usage",
+    "question": "Approximately how much time do you spend on social media each day?",
+    "options": [
+      "Less than 1 hour",
+      "1–2 hours",
+      "2–3 hours",
+      "3–4 hours",
+      "4–5 hours",
+      "5–6 hours",
+      "More than 6 hours"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q08",
+    "section": "Social Media Usage",
+    "question": "How frequently do you check social media throughout the day?",
+    "options": [
+      "1–2 times",
+      "3–5 times",
+      "6–10 times",
+      "11–20 times",
+      "More than 20 times"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q09",
+    "section": "Social Media Usage",
+    "question": "How often do you use social media within one hour before going to sleep?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Always"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q10",
+    "section": "Social Media Usage",
+    "question": "How often do you check social media immediately after waking up?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Always"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q11",
+    "section": "Social Media Usage",
+    "question": "What is your primary reason for using social media?",
+    "options": [
+      "Entertainment",
+      "Communication",
+      "Education/learning",
+      "News/information",
+      "Professional networking",
+      "Business/work",
+      "Content creation",
+      "Following hobbies/interests",
+      "Other"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q12",
+    "section": "Sleep & Lifestyle",
+    "question": "On average, how many hours do you sleep per night?",
+    "options": [
+      "Less than 4 hours",
+      "4–5 hours",
+      "5–6 hours",
+      "6–7 hours",
+      "7–8 hours",
+      "More than 8 hours"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q13",
+    "section": "Sleep & Lifestyle",
+    "question": "How often does social media usage cause you to sleep later than planned?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q14",
+    "section": "Sleep & Lifestyle",
+    "question": "How would you describe your sleep quality?",
+    "options": [
+      "Very poor",
+      "Poor",
+      "Average",
+      "Good",
+      "Very good"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q15",
+    "section": "Sleep & Lifestyle",
+    "question": "How many days per week do you engage in physical activity/exercise for at least 30 minutes?",
+    "options": [
+      "0 days",
+      "1–2 days",
+      "3–4 days",
+      "5–6 days",
+      "7 days"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q16",
+    "section": "Productivity & Daily Life",
+    "question": "How often does social media distract you while studying or working?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q17",
+    "section": "Productivity & Daily Life",
+    "question": "How often do you postpone important tasks because of social media?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q18",
+    "section": "Productivity & Daily Life",
+    "question": "How often do you use social media while studying or working?",
+    "options": [
+      "Always",
+      "Often",
+      "Sometimes",
+      "Rarely",
+      "Never"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q19",
+    "section": "Productivity & Daily Life",
+    "question": "How difficult is it for you to stop using social media when you intend to?",
+    "options": [
+      "1 — Very Easy",
+      "2",
+      "3",
+      "4",
+      "5 — Very Difficult"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q20",
+    "section": "Productivity & Daily Life",
+    "question": "Have you ever spent more time on social media than you originally intended?",
+    "options": [
+      "Never",
+      "Rarely",
+      "Sometimes",
+      "Often",
+      "Very often"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q21",
+    "section": "Offline Social Interaction",
+    "question": "How frequently do you interact face-to-face with friends, family, colleagues, or other people?",
+    "options": [
+      "Less than once a week",
+      "1–2 times per week",
+      "3–4 times per week",
+      "5–6 times per week",
+      "Daily"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q22",
+    "section": "Offline Social Interaction",
+    "question": "How often do you prefer communicating through social media instead of face-to-face interaction?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q23",
+    "section": "Offline Social Interaction",
+    "question": "Do you feel that your social-media usage has reduced the amount of time you spend interacting with people offline?",
+    "options": [
+      "Not at all",
+      "Slightly",
+      "Moderately",
+      "Significantly",
+      "Very significantly"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q24",
+    "section": "Self-Reported Impact",
+    "question": "How often do you feel mentally tired after prolonged social media use?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q25",
+    "section": "Self-Reported Impact",
+    "question": "How often do you compare your life, appearance, achievements, or lifestyle with people you see on social media?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q26",
+    "section": "Self-Reported Impact",
+    "question": "How often does social media negatively affect your mood?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q27",
+    "section": "Self-Reported Impact",
+    "question": "How often do you feel the need to check social media even when there is no important notification?",
+    "options": [
+      "1 — Never",
+      "2",
+      "3",
+      "4",
+      "5 — Very Often"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q28",
+    "section": "Overall Self-Assessment",
+    "question": "Overall, how would you describe the impact of social media on your daily life?",
+    "options": [
+      "Very positive",
+      "Somewhat positive",
+      "Neutral",
+      "Somewhat negative",
+      "Very negative"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q29",
+    "section": "Overall Self-Assessment",
+    "question": "How would you rate your overall social media usage?",
+    "options": [
+      "1 — Very low",
+      "2",
+      "3",
+      "4",
+      "5 — Very High"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q30",
+    "section": "Overall Self-Assessment",
+    "question": "Do you think you spend more time on social media than you should?",
+    "options": [
+      "Definitely no",
+      "Probably no",
+      "Not sure",
+      "Probably yes",
+      "Definitely yes"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q31",
+    "section": "Overall Social Media Impact",
+    "question": "Overall, how much does social media affect your daily life?",
+    "options": [
+      "1 — No impact",
+      "2",
+      "3",
+      "4",
+      "5 — Very High impact"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q32",
+    "section": "Overall Social Media Impact",
+    "question": "How satisfied are you with your current level of social media usage?",
+    "options": [
+      "1 — Very dissatisfied",
+      "2",
+      "3",
+      "4",
+      "5 — Very satisfied"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q33",
+    "section": "Overall Social Media Impact",
+    "question": "Have you ever tried to reduce your social media usage?",
+    "options": [
+      "Never",
+      "Once",
+      "A few times",
+      "Many times",
+      "Currently trying to reduce it"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q34",
+    "section": "Overall Social Media Impact",
+    "question": "If you have tried to reduce your usage, how difficult was it?",
+    "options": [
+      "1 — Very easy",
+      "2",
+      "3",
+      "4",
+      "5 — Very Difficult"
+    ],
+    "type": "scale"
+  },
+  {
+    "id": "Q35",
+    "section": "Overall Social Media Impact",
+    "question": "In your opinion, what is the biggest effect social media has on your daily life?",
+    "options": [
+      "Improves communication",
+      "Helps me learn/increase knowledge",
+      "Provides entertainment",
+      "Helps with professional opportunities",
+      "Reduces productivity",
+      "Affects my sleep",
+      "Causes distraction",
+      "Affects my mood",
+      "Reduces offline interaction",
+      "No significant effect",
+      "Other"
+    ],
+    "type": "single"
+  },
+  {
+    "id": "Q36",
+    "section": "Overall Social Media Impact",
+    "question": "Is there anything else you would like to share about your social media usage?",
+    "options": [],
+    "type": "text"
+  }
+]
