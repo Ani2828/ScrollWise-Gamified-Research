@@ -628,12 +628,12 @@ document.addEventListener("click",(e)=>{
       let saved=false;
       try{
         const controller=new AbortController();
-        const timer=setTimeout(()=>controller.abort(),4000);
-        const r=await fetch("http://127.0.0.1:8000/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:A}),signal:controller.signal});
+        const timer=setTimeout(()=>controller.abort(),15000);
+        const r=await fetch("https://scrollwise-gamified-research.onrender.com/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:A}),signal:controller.signal});
         clearTimeout(timer);
         saved=r.ok;
       }catch(err){}
-      showFinish(saved?"Your response has been saved to the research workbook. Thank you for contributing!":"Journey complete. Start the backend to save responses to Excel.");
+      showFinish("🎉 Journey complete! Thank you for contributing!");
     })();
     return;
   }
