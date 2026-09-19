@@ -1,4 +1,4 @@
-python -m uvicorn main:app --reload<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ScrollWise — Gamified Social Media Survey</title><script src="https://cdn.tailwindcss.com"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f1f8;font-family:Inter,system-ui,sans-serif;color:#171326}button,textarea{font:inherit}
@@ -120,8 +120,15 @@ python -m uvicorn main:app --reload<!doctype html><html lang="en"><head><meta ch
 .bonusResult{min-height:26px;font-weight:900;margin:10px 0}
 @keyframes bonusIn{from{opacity:0;transform:scale(.92) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
 @media(max-width:700px){.gameHud{justify-content:center}.hudItem{flex:1;justify-content:center}.bonusCard{padding:22px}.bonusTarget{font-size:72px}}
+
+/* ================= SCROLLWISE POLISHED SURVEY UI ================= */
+.surveyBrand{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1100px;margin:0 auto 16px;padding:4px 2px}.surveyBrandLeft{display:flex;align-items:center;gap:11px}.surveyBrandIcon{font-size:30px;filter:drop-shadow(0 5px 12px #0005)}.surveyBrandName{font-size:28px;font-weight:950;letter-spacing:-1.2px;background:linear-gradient(90deg,#fff,#f0abfc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}.surveyBrandTag{font-size:11px;color:#d8cbea;margin-top:1px}.surveyBrandStats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.surveyBrandStats span{padding:8px 12px;border:1px solid #ffffff22;background:#ffffff0d;border-radius:999px;font-size:11px;color:#eee5f7;backdrop-filter:blur(8px)}
+.questionWindow.text-question{background:linear-gradient(140deg,#111827 0%,#3f0d27 52%,#1e1b4b 100%);color:#fff;box-shadow:0 20px 48px rgba(31,11,40,.4);padding:18px 18px 20px;border-radius:28px}.text-question .doodleHeader{margin-bottom:10px}.text-question .doodleHeaderTitle{font-size:18px}.text-question .icon{font-size:58px;margin:10px 0 2px}.text-question .q{font-size:31px;max-width:900px;color:#fff;font-weight:950}.text-question .hint{color:#ddd6fe;opacity:1;font-size:15px;margin-bottom:18px}.text-question textarea{max-width:100%;min-height:220px;background:rgba(7,4,24,.72);color:#fff;border:2px solid #a855f7;border-radius:20px;padding:20px 20px 44px;font-size:16px;line-height:1.6;box-shadow:inset 0 0 0 1px #ffffff12,0 12px 30px #0004;caret-color:#f0abfc;position:relative}.text-question textarea::placeholder{color:#9ca3c7;opacity:1}.textQuestionWrap{position:relative;max-width:100%;}.textCounter{position:absolute;right:18px;bottom:12px;color:#a5b4fc;font-size:12px;font-weight:800;pointer-events:none}.text-question .reaction,.text-question .responseMemeStage,.text-question .memeDropWrap,.text-question .doodleTags,.text-question .memeHint{display:none!important}.text-question + .reaction,.text-question ~ .reaction{display:none!important}.cleanToast{display:none}.text-question .nav{margin-top:22px}.text-question .nextPlaceholder{display:none}
+/* Remove the large social/meme response block and its auxiliary labels everywhere; keep the survey focused. */
+.responseMemeStage,.memeDropWrap,.cuteSoundBadge,.doodleTags,.memeHint{display:none!important}
+@media(max-width:700px){.surveyBrand{align-items:flex-start}.surveyBrandName{font-size:23px}.surveyBrandTag{font-size:9px}.surveyBrandStats span{padding:6px 8px;font-size:9px}.questionWindow.text-question{padding:14px 10px 16px}.text-question .q{font-size:24px}.text-question textarea{min-height:190px;padding:16px 16px 40px}}
 </style></head><body><div id="app"><div class="shell"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div><div class="stars"></div><div class="content"><section id="welcome" class="welcome"><div class="logo">📱✨</div><div class="brand">SCROLLWISE</div><p class="sub">Your everyday scrolling habits — turned into a tiny interactive adventure. Pick an answer, trigger a meme, survive the levels, and help build the research dataset.</p><div class="chips"><span class="chip">🎮 36 questions</span><span class="chip">😂 100+ meme drops</span><span class="chip">🧑 age-aware reactions</span><span class="chip">⭐ descriptive 1–5 scales</span><span class="chip">🔬 research survey</span></div><button id="start" class="btn primary">Start the journey →</button></section>
-<section id="survey" class="hidden"><div class="head"><div id="level" class="level"></div><span id="count" class="count"></span><button id="soundToggle" type="button" class="soundToggle" aria-pressed="true">🔊 Cute sounds: ON</button></div><div class="bar"><div id="progress" style="width:0%"></div></div><div id="age" class="age hidden"></div>
+<section id="survey" class="hidden"><div class="surveyBrand"><div class="surveyBrandLeft"><div class="surveyBrandIcon">🎮</div><div><div class="surveyBrandName">ScrollWise</div><div class="surveyBrandTag">Play • Share • Make an Impact</div></div></div><div class="surveyBrandStats"><span>⭐ <strong id="brandXp">0</strong> XP</span><span>🔥 <strong id="brandStreak">0</strong></span><span>🏆 <strong id="brandBadges">0</strong></span></div></div><div class="head"><div id="level" class="level"></div><span id="count" class="count"></span><button id="soundToggle" type="button" class="soundToggle" aria-pressed="true">🔊 Cute sounds: ON</button></div><div class="bar"><div id="progress" style="width:0%"></div></div><div id="age" class="age hidden"></div>
 <div class="gameHud" aria-label="Game progress">
   <div class="hudItem"><span>⭐ XP</span><strong id="xp">0</strong></div>
   <div class="hudItem"><span>🔥 STREAK</span><strong id="streak">0</strong></div>
@@ -555,53 +562,34 @@ function launchBonusRound(afterIndex){
 }
 function showReaction(q,value){
  if(!value||q.type==="text")return"";
- const r=reactionFor(q,value), intensity=answerIntensity(q,value), m=memeFor(q,intensity);
- if(!m)return `<div class="reaction"><div class="reactionEmoji">${r.emoji}</div><div class="reactionText"><div class="reactionTag">Question reaction • ${AGE||"your group"}</div><div class="reactionCaption">${r.caption}</div><div class="reactionSub">${r.sub}</div><div class="meter"><div style="width:${r.percent}%"></div></div></div></div>`;
- const isInstagram=q.id==="Q06" && Array.isArray(value) && value.includes("Instagram");
- const frameInfo=memeFrameTop(m.layout);
- const caption=isInstagram
-   ? ["POV: you opened Instagram for 5 minutes.","The feed: one more reel.","Researcher: how long were you scrolling? 😭"][intensity%3]
-   : m.body;
- const likes=(820 + intensity*547 + i*31 + responseNonce*17).toLocaleString();
- const pillSet=isInstagram?["😂 LOL","🔥 TOO REAL","📱 ONE MORE REEL"]:["😂 LOL","🔥 TOO REAL","👀 CALLED OUT"];
- const responseCaption=isInstagram
-   ? ["POV: you opened Instagram for 5 minutes.","The feed: one more reel.","Researcher: that answer is going in the notes."][responseNonce%3]
-   : [m.body,"This answer unlocked a suspiciously relatable moment.","The doodle committee has reviewed your response."][responseNonce%3];
- return `<div class="reaction"><div class="reactionEmoji">${r.emoji}</div><div class="reactionText"><div class="reactionTag">REACTION • ${AGE||"YOUR GROUP"}</div><div class="reactionCaption">${r.caption}</div><div class="reactionSub">${r.sub}</div><div class="meter"><div style="width:${r.percent}%"></div></div></div></div>
- <div class="responseMemeStage memeDropWrap">
-   <div class="memeFrame responseMeme ${m.layout} rounded-3xl border-4 bg-white shadow-xl" data-meme-post="1">
-     <div class="memeStamp">${m.meterEmoji} ${m.label}</div>
-     <img class="memeGifSticker" src="assets/stickers/${m.sticker}.gif" alt="Animated doodle sticker">
-     <span class="memeStaticSticker">✨ NEW MEME #${responseNonce+1}</span>
-     <div class="memeFrameTop flex items-center gap-3"><div class="memeAvatar">${frameInfo[0]}</div><div class="memeAccount flex-1">${frameInfo[1]}<small>${frameInfo[2]}</small></div><div class="memeDots">•••</div></div>
-     <div class="memeImage"><img class="mainMeme" src="assets/memes/${m.asset}.jpg" alt="${m.assetTitle}" loading="eager"></div>
-     <div class="memeCaptionBand"><em>“${responseCaption}”</em></div>
-     <div class="memeActions"><button class="memeAction" type="button" data-action="like" aria-label="Like meme">♡</button><button class="memeAction" type="button" data-action="laugh" aria-label="Laugh reaction">😂</button><button class="memeAction" type="button" data-action="share" aria-label="Share meme">➤</button><button class="memeAction save" type="button" data-action="save" aria-label="Save meme">🔖</button></div>
-     <div class="memeMeta"><button class="memePill" type="button" data-react="${pillSet[0]}">${pillSet[0]}</button><button class="memePill" type="button" data-react="${pillSet[1]}">${pillSet[1]}</button><button class="memePill" type="button" data-react="${pillSet[2]}">${pillSet[2]}</button></div>
-     <div class="memeChoiceRow"><span>🧩 unique response meme</span><span>🎞️ sticker GIF</span><span>✏️ doodle style</span></div>
-     <div class="memeFooter"><span data-like-count>${likes}</span> likes • ${isInstagram?'Instagram-style':'original doodle'} • ${themeLabels[m.theme]||'meme drop'}</div>
-   </div>
-   <div class="cuteSoundBadge">✨ Cute tap sound <span>•</span> <button type="button" data-sound-inline>turn ${soundEnabled?'off':'on'}</button></div>
-   <div class="doodleTags"><span class="doodleTag">${isInstagram?'📸 Instagram':'🖼️ Meme'}</span><span class="doodleTag">🎞️ sticker</span><span class="doodleTag">tap to react</span></div>
-   <div class="memeHint">New meme + new sticker on every response. Your research answer remains unchanged.</div>
- </div>`;
+ const r=reactionFor(q,value);
+ return `<div class="reaction"><div class="reactionEmoji">${r.emoji}</div><div class="reactionText"><div class="reactionTag">Question reaction • ${AGE||"your group"}</div><div class="reactionCaption">${r.caption}</div><div class="reactionSub">${r.sub}</div><div class="meter"><div style="width:${r.percent}%"></div></div></div></div>`;
 }
-function render(direction="none"){const q=Q[i],scene=document.getElementById("scene");document.getElementById("level").textContent=level(i+1);document.getElementById("count").textContent=`Question ${i+1} of ${Q.length}`;document.getElementById("progress").style.width=((i+1)/Q.length*100)+"%";const ag=document.getElementById("age");ag.textContent=AGE?"🧑 Age group: "+AGE:"";ag.classList.toggle("hidden",!AGE);const windowClass=direction==="next"?"slide-next":direction==="back"?"slide-back":"no-slide";const theme=questionTheme(q);scene.innerHTML=`<div class="questionWindow theme-${theme} ${windowClass}"><div class="doodleHeader"><div class="doodleSticker">${icons[q.section]||"✨"}</div><div class="doodleHeaderText"><div class="doodleKicker">${q.section} • ${themeLabels[theme]||"research mode"}</div><div class="doodleHeaderTitle">Question ${i+1}: ${q.question.length>52?q.question.slice(0,49)+"…":q.question}</div></div><div class="doodleTape"></div></div>${i===0?sectionOneIntro():""}${[1,6,12,16,21,24,28,31].includes(i+1)?levelDrop(i+1):""}<div class="icon">${icons[q.section]||"✨"}</div><div class="q">${q.question}</div><div class="hint">${q.type==="multi"?"Select all that apply.":q.type==="text"?"Optional — share anything else you would like to add.":"Choose the answer that best describes you."}</div>`;
+
+function render(direction="none"){const q=Q[i],scene=document.getElementById("scene");document.getElementById("level").textContent=level(i+1);document.getElementById("count").textContent=`Question ${i+1} of ${Q.length}`;document.getElementById("progress").style.width=((i+1)/Q.length*100)+"%";const ag=document.getElementById("age");ag.textContent=AGE?"🧑 Age group: "+AGE:"";ag.classList.toggle("hidden",!AGE);const windowClass=direction==="next"?"slide-next":direction==="back"?"slide-back":"no-slide";const theme=questionTheme(q);const textClass=q.type==="text"?" text-question":"";scene.innerHTML=`<div class="questionWindow theme-${theme}${textClass} ${windowClass}"><div class="doodleHeader"><div class="doodleSticker">${icons[q.section]||"✨"}</div><div class="doodleHeaderText"><div class="doodleKicker">${q.section} • ${themeLabels[theme]||"research mode"}</div><div class="doodleHeaderTitle">Question ${i+1}: ${q.question.length>52?q.question.slice(0,49)+"…":q.question}</div></div><div class="doodleTape"></div></div>${i===0?sectionOneIntro():""}${[1,6,12,16,21,24,28,31].includes(i+1)?levelDrop(i+1):""}<div class="icon">${icons[q.section]||"✨"}</div><div class="q">${q.question}</div><div class="hint">${q.type==="multi"?"Select all that apply.":q.type==="text"?"Optional — share anything else you would like to add.":"Choose the answer that best describes you."}</div>`;
 const chosen=A[q.id];
 if(q.type==="text"){
- const t=document.createElement("textarea");
- t.placeholder="Your response...";
- t.value=A[q.id]||"";
  const win=scene.querySelector(".questionWindow");
+ const wrap=document.createElement("div");
+ wrap.className="textQuestionWrap";
+ const t=document.createElement("textarea");
+ t.placeholder="Type your answer here (optional)...";
+ t.maxLength=500;
+ t.value=A[q.id]||"";
+ const counter=document.createElement("div");
+ counter.className="textCounter";
+ const updateCounter=()=>{counter.textContent=`${t.value.length}/500`;};
  t.oninput=()=>{
    const wasEmpty=!String(A[q.id]||"").trim();
    A[q.id]=t.value;
-   const existing=win.querySelector(".responseMemeStage");
-   if(t.value.trim() && wasEmpty){ responseNonce++; awardXP(q,t.value); win.insertAdjacentHTML("beforeend",showReaction(q,t.value)); playCuteTap(); }
-   if(!t.value.trim() && existing) existing.remove();
+   updateCounter();
+   if(t.value.trim() && wasEmpty){ responseNonce++; awardXP(q,t.value); playCuteTap(); }
+   document.getElementById("next").disabled=!String(t.value||"").trim();
  };
- win.appendChild(t);
- if(String(chosen||"").trim()) win.insertAdjacentHTML("beforeend",showReaction(q,chosen));
+ wrap.appendChild(t);
+ wrap.appendChild(counter);
+ win.appendChild(wrap);
+ updateCounter();
  document.getElementById("next").disabled=!String(t.value||"").trim();
 }
 else{const box=document.createElement("div");box.className=q.type==="scale"?"scale":"opts";const vals=q.type==="scale"?q.options.map((_,n)=>String(n+1)):q.options;vals.forEach((v,k)=>{const b=document.createElement("button");b.className="opt";const selected=q.type==="multi"?(A[q.id]||[]).includes(v):A[q.id]===v;if(selected)b.classList.add("sel");if(q.type==="scale")b.innerHTML=`<span class="num">${k+1}</span><strong>${k+1}</strong><small>${scaleText[q.id][k]}</small>`;else b.innerHTML=`<span class="num">${k+1}</span>${v}`;b.onclick=()=>{if(q.type==="multi"){const old=A[q.id]||[];A[q.id]=old.includes(v)?old.filter(x=>x!==v):[...old,v]}else A[q.id]=v;if(q.id==="Q02")AGE=v;responseNonce++;awardXP(q,A[q.id]);render();playCuteTap();};box.appendChild(b)});scene.querySelector(".questionWindow").appendChild(box);if(chosen&&(!Array.isArray(chosen)||chosen.length))scene.querySelector(".questionWindow").insertAdjacentHTML("beforeend",showReaction(q,chosen));document.getElementById("next").disabled=!(chosen&&(!Array.isArray(chosen)||chosen.length))}
@@ -612,9 +600,14 @@ nextBtn.setAttribute("aria-disabled", String(!answerReady));
 nextBtn.classList.toggle("ready", answerReady);
 const backBtn=document.getElementById("back");
 backBtn.disabled=i===0;
-document.getElementById("toast").textContent=chosen&&(!Array.isArray(chosen)||chosen.length)?"Answer selected — Continue is ready.":(AGE&&ageVoices[AGE]?ageVoices[AGE][i%5][2]:"Pick an answer to unlock your reaction.");scene.querySelector(".questionWindow").insertAdjacentHTML("beforeend","</div>")}
+document.getElementById("toast").textContent=q.type==="text"?"":(chosen&&(!Array.isArray(chosen)||chosen.length)?"Answer selected — Continue is ready.":(AGE&&ageVoices[AGE]?ageVoices[AGE][i%5][2]:"Pick an answer to unlock your reaction."));scene.querySelector(".questionWindow").insertAdjacentHTML("beforeend","</div>");syncBrandStats()}
+function syncBrandStats(){
+ const xp=document.getElementById("xp")?.textContent||"0",streak=document.getElementById("streak")?.textContent||"0",badges=document.getElementById("badges")?.textContent||"0";
+ const bx=document.getElementById("brandXp"),bs=document.getElementById("brandStreak"),bb=document.getElementById("brandBadges");
+ if(bx)bx.textContent=xp;if(bs)bs.textContent=streak;if(bb)bb.textContent=badges;
+}
 function showWelcome(){document.getElementById("welcome").classList.remove("hidden");document.getElementById("survey").classList.add("hidden");document.getElementById("finish").classList.add("hidden")}
-function showSurvey(){document.getElementById("welcome").classList.add("hidden");document.getElementById("finish").classList.add("hidden");document.getElementById("survey").classList.remove("hidden");render()}
+function showSurvey(){document.getElementById("welcome").classList.add("hidden");document.getElementById("finish").classList.add("hidden");document.getElementById("survey").classList.remove("hidden");render();syncBrandStats()}
 function showFinish(message){document.getElementById("survey").classList.add("hidden");document.getElementById("welcome").classList.add("hidden");document.getElementById("finish").classList.remove("hidden");document.getElementById("finishText").textContent=message}
 function hasAnswer(q,value){return value!==undefined && value!==null && (q.type!=="multi" || (Array.isArray(value)&&value.length>0))}
 
