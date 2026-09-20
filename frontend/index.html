@@ -625,15 +625,41 @@ document.addEventListener("click",(e)=>{
     if(q.id==="Q01"&&value==="No"){showFinish("Thank you for your time. Your response was not recorded because consent was not given.");return}
     if(i<Q.length-1){i++;render("next");return}
     (async()=>{
-      let saved=false;
+      if(next.disabled) return;
+      
+      next.disabled=true;
+      next.style.pointerEvents="none";
+      next.textContent="Saving...";
+
       try{
         const controller=new AbortController();
         const timer=setTimeout(()=>controller.abort(),15000);
-        const r=await fetch("https://scrollwise-gamified-research.onrender.com/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:A}),signal:controller.signal});
-        clearTimeout(timer);
-        saved=r.ok;
-      }catch(err){}
+
+        const r=await fetch("https://scrollwise-gamified-research.onrender.com/api/submit",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({answers:A}),
+          signal:controller.signal
+       });
+
+      clearTimeout(timer);
+      
+      if(!r.ok){
+        throw new Error("Server returned HTTP " + r.status);
+      }
+      
       showFinish("🎉 Journey complete! Thank you for contributing!");
+    
+    }catch(err){
+      console.error("Submission failed:",err);
+
+      next.disabled=false;
+      next.style.pointerEvents="";
+      next.textContent="Continue →";
+
+      document.getElementById("toast").textContent=
+        "Couldn't save your response. Please try again.";
+     }
     })();
     return;
   }
